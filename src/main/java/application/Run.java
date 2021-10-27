@@ -1,6 +1,8 @@
-package foodjournal;
+package application;
 
-public class App {
+import controllers.Application;
+
+public class Run {
     public static void main(String[] args){
         Application.main(args);
     }

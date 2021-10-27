@@ -1,5 +1,6 @@
-package foodjournal;
+package controllers;
 
+import application.UserSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -11,8 +12,8 @@ public class AfterLoginController {
     private Button logout;
 
     public  void logoutCall() throws IOException {
-        Application m = new Application();
-        m.changeScene("login.fxml");
+        UserSession.cleanUserSession();
+        Application.changeScene("login.fxml");
     }
 
 }

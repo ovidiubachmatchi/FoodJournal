@@ -1,4 +1,4 @@
-package foodjournal;
+package controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,8 +22,8 @@ public class Application extends javafx.application.Application {
         stage.show();
     }
 
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
+    public static void changeScene(String fxml) throws IOException {
+        Parent pane = FXMLLoader.load(Application.class.getResource(fxml));
         stg.getScene().setRoot(pane);
     }
 

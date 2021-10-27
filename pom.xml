@@ -20,10 +20,22 @@
             <artifactId>javafx-controls</artifactId>
             <version>17.0.0.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.0.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.27</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -59,7 +71,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.foodjournal/foodjournal.Application</mainClass>
+                            <mainClass>com.example.foodjournal/controllers.Application</mainClass>
                         </configuration>
                     </execution>
                 </executions>

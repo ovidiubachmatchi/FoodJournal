@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fcfcfc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodjournal.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fcfcfc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="289.0" BorderPane.alignment="CENTER">
          <children>
@@ -41,7 +41,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <TextField fx:id="username" layoutX="80.0" layoutY="127.0" />
+            <TextField fx:id="email" layoutX="80.0" layoutY="127.0" />
             <Button layoutY="239.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="270.0" style="-fx-background-color: none;" text="You dont have an account? " />
             <Button fx:id="signup" layoutX="203.0" layoutY="243.0" mnemonicParsing="false" onAction="#signupButtonClicked" style="-fx-background-color: none; -fx-underline: true;" text="Sign Up">
                <cursor>
