@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import static controllers.SignupController.validEmail;
+
 public class LoginController implements Initializable {
 
     @FXML
@@ -32,16 +34,16 @@ public class LoginController implements Initializable {
     private Button signup;
 
     @FXML
-    private Label wrong;
+    private Label wrongLabel;
 
     private void checkLogin() throws IOException {
         if (email.getText().isEmpty() || password.getText().isEmpty())
-            wrong.setText("Please enter your data");
+            wrongLabel.setText("Please enter your data");
+        else if (validEmail(email.getText())==false) {
+            wrongLabel.setText("Your email address is not valid");
+        }
         else {
-            wrong.setText("");
-
-            DatabaseConnection connectNow = new DatabaseConnection();
-            Connection connectDB = connectNow.getConnection();
+            wrongLabel.setText("");
 
             String hashedPassword = PBKDF2.getHashedPassword(password.getText());
 
@@ -49,22 +51,24 @@ public class LoginController implements Initializable {
 
             try {
 
-                Statement statement = connectDB.createStatement();
+                Statement statement = Application.connectDB.createStatement();
                 ResultSet queryResult = statement.executeQuery(verifyLogin);
 
 
                 if(queryResult.next() == false){
-                    wrong.setText("Invalid login. Please try again.");
+                    wrongLabel.setText("Invalid login. Please try again.");
                 }
                 else {
-                    String _email = email.getText();
-                    String _privileges = queryResult.getString(9);
-                    String _username = queryResult.getString(3);
-                    Short _age = queryResult.getShort(8);
-                    Short _weight = queryResult.getShort(5);
-                    Short _height = queryResult.getShort(6);
-                    String _objective = queryResult.getString(7);
-                    UserSession.getInstance(_email,_privileges,_username,_age,_weight,_height,_objective);
+                    UserSession.getInstance(
+                            email.getText(),
+                            queryResult.getString(9),
+                            queryResult.getString(3),
+                            queryResult.getShort(8),
+                            queryResult.getFloat(5),
+                            queryResult.getFloat(6),
+                            queryResult.getString(7),
+                            queryResult.getString(10)
+                    );
                     Application.changeScene("afterLogin.fxml");
                 }
             }catch (Exception e) {
@@ -75,7 +79,12 @@ public class LoginController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         password.setFocusTraversable(false);
+        if (UserSession.getFreshSignUpUsername() != "") {
+            wrongLabel.setWrapText(true);
+            wrongLabel.setText("Thank you for filling out our sign up form.\nWe are glad that you joined us.");
+        }
     }
 
     @FXML
@@ -84,8 +93,7 @@ public class LoginController implements Initializable {
     }
 
     private void signup() throws IOException {
-        Application m = new Application();
-        m.changeScene("signup.fxml");
+        Application.changeScene("signup.fxml");
     }
 
     @FXML

@@ -3,6 +3,8 @@ module com.example.foodjournal {
     requires javafx.fxml;
     requires java.sql;
     requires org.apache.commons.codec;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
 
 
     opens controllers to javafx.fxml;

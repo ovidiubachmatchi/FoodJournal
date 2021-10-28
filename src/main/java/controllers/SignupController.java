@@ -1,13 +1,18 @@
 package controllers;
 
+import application.UserSession;
+import application.methods.DatabaseConnection;
+import application.methods.PBKDF2;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -18,6 +23,9 @@ public class SignupController implements Initializable {
 
     @FXML
     private TextField repeatPassword;
+
+    @FXML
+    private TextField age;
 
     @FXML
     private TextField email;
@@ -36,6 +44,9 @@ public class SignupController implements Initializable {
 
     @FXML
     private ChoiceBox genderCheckBox;
+
+    @FXML
+    private ChoiceBox objectiveCheckBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,17 +76,90 @@ public class SignupController implements Initializable {
             return false;
         if (!weightCheck())
             return false;
+        if (!ageCheck())
+            return false;
         if (!genderCheck())
             return false;
+        if (!objectiveCheck())
+            return false;
 
-        Application m = new Application();
-        m.changeScene("login.fxml");
+
+        String hashedPassword = PBKDF2.getHashedPassword(password.getText());
+
+        PreparedStatement psInsert = null;
+        PreparedStatement psCheckUserExists = null;
+        ResultSet resultSet = null;
+
+        try {
+
+            psCheckUserExists = Application.connectDB.prepareStatement("SELECT * FROM users WHERE email = ?");
+            psCheckUserExists.setString(1, email.getText());
+            resultSet = psCheckUserExists.executeQuery();
+
+            if (resultSet.isBeforeFirst()) {
+                System.out.println("User already exists!");
+                wrongLabel.setText("This email is already taken");
+            } else {
+                psInsert = Application.connectDB.prepareStatement(
+                        "INSERT INTO users (email, username, password, weight, height, objective, age, gender) VALUES (?,?,?,?,?,?,?,?)"
+                );
+                psInsert.setString(1, email.getText());
+                psInsert.setString(2, username.getText());
+                psInsert.setString(3, hashedPassword);
+                psInsert.setString(4, weight.getText());
+                psInsert.setString(5, height.getText());
+                psInsert.setString(6, objectiveCheckBox.getValue().toString());
+                psInsert.setString(7, age.getText());
+                psInsert.setString(8, genderCheckBox.getValue().toString());
+
+                psInsert.executeUpdate();
+                UserSession.getInstance(
+                        username.getText()
+                );
+                Application.changeScene("login.fxml");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
         return true;
+    }
+
+    private boolean ageCheck() {
+        if (!whRegex(age.getText(),"round"))
+        {
+            wrongLabel.setText("Age should be a number");
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean whRegex(String string, String mode){
+        String regex;
+        if (mode.equals("round"))
+            regex = "^[0-9]+$";
+        else
+            regex = "[+-]?((\\d+\\.?\\d*)|(\\.\\d+))";
+
+        Pattern pat = Pattern.compile(regex);
+        if (string == null)
+            return false;
+        return pat.matcher(string).matches();
     }
 
     private boolean genderCheck() {
         if(genderCheckBox.getValue().equals("Select your gender")) {
             wrongLabel.setText("Please select your gender");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean objectiveCheck() {
+        if(objectiveCheckBox.getValue().equals("Select your objective")) {
+            wrongLabel.setText("Please select your objective");
             return false;
         }
         return true;
@@ -93,17 +177,9 @@ public class SignupController implements Initializable {
         return false;
     }
 
-    private boolean whRegex(String string){
-        String emailRegex = "[+-]?([0-9]*[.,])?[0-9]+";
-
-        Pattern pat = Pattern.compile(emailRegex);
-        if (string == null)
-            return false;
-        return pat.matcher(string).matches();
-    }
 
     private boolean weightCheck() {
-        if (!whRegex(weight.getText()))
+        if (!whRegex(weight.getText(),"float"))
         {
             wrongLabel.setText("Weight should be a number");
             return false;
@@ -112,7 +188,7 @@ public class SignupController implements Initializable {
     }
 
     private boolean heightCheck() {
-        if (!whRegex(height.getText()))
+        if (!whRegex(height.getText(),"float"))
         {
             wrongLabel.setText("Height should be a number");
             return false;

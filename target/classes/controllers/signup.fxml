@@ -14,68 +14,56 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fcfcfc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignupController">
-   <left>
-      <AnchorPane prefHeight="400.0" prefWidth="227.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="163.0" fitWidth="200.0" layoutX="17.0" layoutY="96.0" preserveRatio="true">
-               <image>
-                  <Image url="@img/login.png" />
-               </image></ImageView>
-            <Label fx:id="wrong" layoutX="61.0" layoutY="298.0" prefHeight="17.0" prefWidth="128.0" textFill="RED" />
-            <Label fx:id="wrongLabel" alignment="CENTER" layoutX="-1.0" layoutY="294.0" prefHeight="18.0" prefWidth="229.0" textAlignment="CENTER" textFill="RED" />
-         </children>
-      </AnchorPane>
-   </left>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fcfcfc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignupController">
    <right>
-      <AnchorPane prefHeight="400.0" prefWidth="327.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="600.0" prefWidth="445.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="-35.0" layoutY="53.0" text="username">
+            <Label alignment="CENTER" layoutX="20.0" layoutY="107.0" prefHeight="34.0" prefWidth="170.0" text="Username" textAlignment="CENTER">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="30.0" />
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
                </font>
             </Label>
-            <Label layoutX="-38.0" layoutY="131.0" text="password">
+            <Label alignment="CENTER" layoutX="20.0" layoutY="185.0" prefWidth="170.0" text="Password" textAlignment="CENTER">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="30.0" />
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
                </font>
             </Label>
-            <PasswordField fx:id="password" layoutX="-31.0" layoutY="172.0" style="-fx-alignment: center;" />
-            <Button fx:id="signup" layoutX="82.0" layoutY="319.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Sign up">
+            <PasswordField fx:id="password" layoutX="20.0" layoutY="226.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+            <Button layoutX="156.0" layoutY="476.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Sign up">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TextField fx:id="username" layoutX="-29.0" layoutY="87.0" style="-fx-alignment: center;" />
-            <Label layoutX="-17.0" layoutY="218.0" text="gender">
+            <TextField fx:id="username" layoutX="20.0" layoutY="141.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+            <Label alignment="CENTER" layoutX="20.0" layoutY="357.0" prefWidth="170.0" text="Gender" textAlignment="CENTER">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="30.0" />
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
                </font>
             </Label>
-            <Label layoutX="180.0" layoutY="53.0" text="email">
+            <Label alignment="CENTER" layoutX="210.0" layoutY="107.0" prefHeight="34.0" prefWidth="170.0" text="Email" textAlignment="CENTER">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="30.0" />
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
                </font>
             </Label>
-            <Label layoutX="170.0" layoutY="131.0" text="height">
+            <Label alignment="CENTER" layoutX="210.0" layoutY="185.0" prefWidth="170.0" text="Height">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="30.0" />
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="email" layoutX="155.0" layoutY="86.0" style="-fx-alignment: center;" />
-            <Label layoutX="171.0" layoutY="218.0" text="weight">
+            <TextField fx:id="email" layoutX="210.0" layoutY="140.0" prefWidth="170.0" style="-fx-alignment: center;" />
+            <Label alignment="CENTER" layoutX="210.0" layoutY="272.0" prefWidth="170.0" text="Weight">
                <font>
-                  <Font name="Copperplate Gothic Bold" size="30.0" />
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
                </font>
             </Label>
-            <Label layoutX="63.0" layoutY="294.0" text="Already a member? " />
-            <Button fx:id="login" layoutX="161.0" layoutY="290.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: none; -fx-underline: true;" text="Log in">
+            <Label layoutX="137.0" layoutY="443.0" text="Already a member? " />
+            <Button fx:id="login" layoutX="236.0" layoutY="439.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: none; -fx-underline: true;" text="Log in">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <TextField fx:id="height" layoutX="155.0" layoutY="172.0" prefHeight="26.0" prefWidth="111.0" style="-fx-alignment: center;" />
-            <TextField fx:id="weight" layoutX="155.0" layoutY="259.0" prefHeight="26.0" prefWidth="111.0" style="-fx-alignment: center;" />
-            <ChoiceBox fx:id="weightChoiceBox" layoutX="267.0" layoutY="263.0" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: none;" value="kg">
+            <TextField fx:id="height" layoutX="210.0" layoutY="226.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" stylesheets="@style.combobox.css" />
+            <TextField fx:id="weight" layoutX="210.0" layoutY="313.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+            <ChoiceBox fx:id="weightChoiceBox" layoutX="329.0" layoutY="314.0" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: none;" value="kg">
             <items>
                <FXCollections fx:factory="observableArrayList">
                   <String fx:value="kg" />
@@ -83,7 +71,7 @@
                </FXCollections>
             </items>
          </ChoiceBox>
-            <ChoiceBox fx:id="heightChoiceBox" layoutX="266.0" layoutY="175.0" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: none;" value="m">
+            <ChoiceBox fx:id="heightChoiceBox" layoutX="329.0" layoutY="226.0" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: none;" value="m">
                <items>
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:value="m" />
@@ -91,7 +79,7 @@
                   </FXCollections>
                </items>
             </ChoiceBox>
-            <ChoiceBox fx:id="genderCheckBox" layoutX="-31.0" layoutY="263.0" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: none; -fx-alignment: right;" value="Select your gender">
+            <ChoiceBox fx:id="genderCheckBox" layoutX="20.0" layoutY="400.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: none; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your gender">
                <items>
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:value="Male" />
@@ -99,7 +87,39 @@
                   </FXCollections>
                </items>
             </ChoiceBox>
+            <Label alignment="CENTER" layoutX="20.0" layoutY="272.0" prefWidth="170.0" text="Age" textAlignment="CENTER">
+               <font>
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="age" layoutX="20.0" layoutY="313.0" prefWidth="170.0" style="-fx-alignment: center;" />
+            <Label alignment="CENTER" layoutX="210.0" layoutY="357.0" prefWidth="170.0" text="Objective">
+               <font>
+                  <Font name="AdobeDevanagari-Regular" size="30.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="objectiveCheckBox" layoutX="210.0" layoutY="400.0" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: none; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your objective">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Weight loss" />
+                     <String fx:value="Weight gain" />
+                     <String fx:value="Weight maintenance" />
+                  </FXCollections>
+               </items>
+            </ChoiceBox>
          </children>
       </AnchorPane>
    </right>
+   <left>
+      <AnchorPane prefHeight="600.0" prefWidth="393.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="281.0" fitWidth="340.0" layoutX="87.0" layoutY="162.0" preserveRatio="true">
+               <image>
+                  <Image url="@img/login.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="wrongLabel" alignment="CENTER" layoutX="138.0" layoutY="457.0" prefHeight="18.0" prefWidth="235.0" textAlignment="CENTER" textFill="RED" />
+         </children>
+      </AnchorPane>
+   </left>
 </BorderPane>
