@@ -48,6 +48,12 @@ public class SignupController implements Initializable {
     @FXML
     private ChoiceBox objectiveCheckBox;
 
+    @FXML
+    private ChoiceBox weightChoiceBox;
+
+    @FXML
+    private ChoiceBox heightChoiceBox;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         password.setFocusTraversable(false);
@@ -101,7 +107,7 @@ public class SignupController implements Initializable {
                 wrongLabel.setText("This email is already taken");
             } else {
                 psInsert = Application.connectDB.prepareStatement(
-                        "INSERT INTO users (email, username, password, weight, height, objective, age, gender) VALUES (?,?,?,?,?,?,?,?)"
+                        "INSERT INTO users (email, username, password, weight, height, objective, age, gender, weightMeasurement, heightMeasurement ) VALUES (?,?,?,?,?,?,?,?,?,?)"
                 );
                 psInsert.setString(1, email.getText());
                 psInsert.setString(2, username.getText());
@@ -111,6 +117,8 @@ public class SignupController implements Initializable {
                 psInsert.setString(6, objectiveCheckBox.getValue().toString());
                 psInsert.setString(7, age.getText());
                 psInsert.setString(8, genderCheckBox.getValue().toString());
+                psInsert.setString(9, weightChoiceBox.getValue().toString());
+                psInsert.setString(10, heightChoiceBox.getValue().toString());
 
                 psInsert.executeUpdate();
                 UserSession.getInstance(

@@ -1,7 +1,6 @@
 package controllers;
 
 import application.UserSession;
-import application.methods.DatabaseConnection;
 import application.methods.PBKDF2;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +11,6 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -22,16 +20,10 @@ import static controllers.SignupController.validEmail;
 public class LoginController implements Initializable {
 
     @FXML
-    private Button login;
-
-    @FXML
     private TextField email;
 
     @FXML
     private PasswordField password;
-
-    @FXML
-    private Button signup;
 
     @FXML
     private Label wrongLabel;
@@ -67,9 +59,11 @@ public class LoginController implements Initializable {
                             queryResult.getFloat(5),
                             queryResult.getFloat(6),
                             queryResult.getString(7),
-                            queryResult.getString(10)
+                            queryResult.getString(10),
+                            queryResult.getString(11),
+                            queryResult.getString(12)
                     );
-                    Application.changeScene("afterLogin.fxml");
+                    Application.changeScene("mainMenu.fxml");
                 }
             }catch (Exception e) {
                 e.printStackTrace();
@@ -83,8 +77,9 @@ public class LoginController implements Initializable {
         password.setFocusTraversable(false);
         if (UserSession.getFreshSignUpUsername() != "") {
             wrongLabel.setWrapText(true);
-            wrongLabel.setText("Thank you for filling out our sign up form.\nWe are glad that you joined us.");
+            wrongLabel.setText("Thank you " +UserSession.getFreshSignUpUsername() +" for filling out our sign up form.\nWe are glad that you joined us.");
         }
+        UserSession.getInstance();
     }
 
     @FXML
