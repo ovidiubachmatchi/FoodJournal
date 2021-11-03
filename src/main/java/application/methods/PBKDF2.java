@@ -12,7 +12,7 @@ public class PBKDF2 {
 
     public static String getHashedPassword(String password) throws UnsupportedEncodingException {
 
-        String salt = "1234";
+        String salt = "ovidiuBachmatchiProject";
         int iterations = 10000;
         int keyLength = 512;
         char[] passwordChars = password.toCharArray();

@@ -1,11 +1,11 @@
 package controllers;
 
 import application.UserSession;
-import application.methods.DatabaseConnection;
+import application.methods.Animations;
 import application.methods.PBKDF2;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -54,8 +54,12 @@ public class SignupController implements Initializable {
     @FXML
     private ChoiceBox heightChoiceBox;
 
+    @FXML
+    private Button signup;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Animations.ScaleOnHover(signup);
         password.setFocusTraversable(false);
     }
 
@@ -98,7 +102,7 @@ public class SignupController implements Initializable {
 
         try {
 
-            psCheckUserExists = Application.connectDB.prepareStatement("SELECT * FROM users WHERE email = ?");
+            psCheckUserExists = Application.connectDB.prepareStatement("SELECT * FROM user WHERE email = ?");
             psCheckUserExists.setString(1, email.getText());
             resultSet = psCheckUserExists.executeQuery();
 
@@ -107,16 +111,16 @@ public class SignupController implements Initializable {
                 wrongLabel.setText("This email is already taken");
             } else {
                 psInsert = Application.connectDB.prepareStatement(
-                        "INSERT INTO users (email, username, password, weight, height, objective, age, gender, weightMeasurement, heightMeasurement ) VALUES (?,?,?,?,?,?,?,?,?,?)"
+                        "INSERT INTO user (email, username, password, weight, height, objective, age, gender, weightMeasurement, heightMeasurement ) VALUES (?,?,?,?,?,?,?,?,?,?)"
                 );
                 psInsert.setString(1, email.getText());
                 psInsert.setString(2, username.getText());
                 psInsert.setString(3, hashedPassword);
-                psInsert.setString(4, weight.getText());
-                psInsert.setString(5, height.getText());
+                psInsert.setFloat(4, Float.parseFloat(weight.getText()));
+                psInsert.setFloat(5, Float.parseFloat(height.getText()));
                 psInsert.setString(6, objectiveCheckBox.getValue().toString());
-                psInsert.setString(7, age.getText());
-                psInsert.setString(8, genderCheckBox.getValue().toString());
+                psInsert.setInt(7, Integer.parseInt(age.getText()));
+                psInsert.setString(8, String.valueOf(genderCheckBox.getValue().toString().charAt(0)));
                 psInsert.setString(9, weightChoiceBox.getValue().toString());
                 psInsert.setString(10, heightChoiceBox.getValue().toString());
 

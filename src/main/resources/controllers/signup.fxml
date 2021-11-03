@@ -29,7 +29,7 @@
                </font>
             </Label>
             <PasswordField fx:id="password" layoutX="20.0" layoutY="226.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
-            <Button layoutX="146.0" layoutY="478.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Sign up">
+            <Button fx:id="signup" layoutX="146.0" layoutY="478.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Sign up">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -84,6 +84,8 @@
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:value="Male" />
                      <String fx:value="Female" />
+                     <String fx:value="Other" />
+                     <String fx:value="I prefer not to say" />
                   </FXCollections>
                </items>
             </ChoiceBox>

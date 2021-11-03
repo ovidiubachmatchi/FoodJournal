@@ -77,4 +77,12 @@ public final class UserSession {
         sb.append('}');
         System.out.println(sb.toString());
     }
+
+    public static Float getWeight() {
+        return weight;
+    }
+
+    public static Float getHeight() {
+        return height;
+    }
 }

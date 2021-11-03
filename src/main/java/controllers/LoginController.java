@@ -1,6 +1,7 @@
 package controllers;
 
 import application.UserSession;
+import application.methods.Animations;
 import application.methods.PBKDF2;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +29,9 @@ public class LoginController implements Initializable {
     @FXML
     private Label wrongLabel;
 
+    @FXML
+    private Button loginBtn;
+
     private void checkLogin() throws IOException {
         if (email.getText().isEmpty() || password.getText().isEmpty())
             wrongLabel.setText("Please enter your data");
@@ -39,10 +43,12 @@ public class LoginController implements Initializable {
 
             String hashedPassword = PBKDF2.getHashedPassword(password.getText());
 
-            String verifyLogin = "SELECT * from users WHERE email = '" + email.getText() + "' AND password ='"+ hashedPassword +"'";
+            String verifyLogin = "SELECT * from user WHERE email = '" + email.getText() + "' AND password ='"+ hashedPassword +"'";
 
             try {
 
+                if(controllers.Application.connectDB == null)
+                    wrongLabel.setText("Something went wrong");
                 Statement statement = Application.connectDB.createStatement();
                 ResultSet queryResult = statement.executeQuery(verifyLogin);
 
@@ -53,15 +59,15 @@ public class LoginController implements Initializable {
                 else {
                     UserSession.getInstance(
                             email.getText(),
-                            queryResult.getString(9),
-                            queryResult.getString(3),
-                            queryResult.getShort(8),
-                            queryResult.getFloat(5),
-                            queryResult.getFloat(6),
-                            queryResult.getString(7),
-                            queryResult.getString(10),
                             queryResult.getString(11),
-                            queryResult.getString(12)
+                            queryResult.getString(3),
+                            queryResult.getShort(12),
+                            queryResult.getFloat(6),
+                            queryResult.getFloat(5),
+                            queryResult.getString(9),
+                            queryResult.getString(4),
+                            queryResult.getString(8),
+                            queryResult.getString(7)
                     );
                     Application.changeScene("mainMenu.fxml");
                 }
@@ -73,6 +79,11 @@ public class LoginController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Animations.ScaleOnHover(loginBtn);
+
+        email.setText("ovidiubachmatchi@gmail.com");
+        password.setText("123123123");
 
         password.setFocusTraversable(false);
         if (UserSession.getFreshSignUpUsername() != "") {

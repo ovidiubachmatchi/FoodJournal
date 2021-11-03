@@ -1,11 +1,14 @@
 package controllers;
 
 import application.UserSession;
+import application.methods.Animations;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.fxml.Initializable;
 import javafx.scene.shape.Circle;
@@ -13,12 +16,13 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class MainMenu implements Initializable {
 
     @FXML
-    private Button addButton;
+    private Button addButton,addToJournal;
 
     @FXML
     private Label plusLabel,minusLabel;
@@ -33,23 +37,8 @@ public class MainMenu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addButton.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                plusCircle2.setScaleX(1.05);
-                plusCircle2.setScaleY(1.05);
-                plusCircle2.setScaleZ(1.05);
-                plusCircle3.setScaleX(1.05);
-                plusCircle3.setScaleY(1.05);
-                plusCircle3.setScaleZ(1.05);
-            } else {
-                plusCircle2.setScaleX(1);
-                plusCircle2.setScaleY(1);
-                plusCircle2.setScaleZ(1);
-                plusCircle3.setScaleX(1);
-                plusCircle3.setScaleY(1);
-                plusCircle3.setScaleZ(1);
-            }
-        });
+        Animations.ScaleOnHover(addButton,new Circle[]{plusCircle2,plusCircle3});
+        Animations.ScaleOnHover(addToJournal);
         plusSectionTransition.setDuration(Duration.millis(350));
         plusSectionTransition.setNode(plusSection);
     }
@@ -59,9 +48,14 @@ public class MainMenu implements Initializable {
         Application.changeScene("login.fxml");
     }
 
-
+    @FXML
+    private DatePicker datePickerAdd;
+    @FXML
+    private TextField weightFieldAdd,heightFieldAdd;
     public void addButtonAction(ActionEvent actionEvent) {
-        System.out.println(plusSection.getTranslateY());
+        datePickerAdd.setValue(LocalDate.now());
+        weightFieldAdd.setText(String.valueOf(UserSession.getWeight()));
+        heightFieldAdd.setText((String.valueOf(UserSession.getHeight())));
         if(plusSection.getTranslateY() == 0) {
             plusSectionTransition.setToY(-362);
             plusSectionTransition.play();
@@ -75,5 +69,15 @@ public class MainMenu implements Initializable {
             plusLabel.setVisible(true);
             minusLabel.setVisible(false);
         }
+    }
+    @FXML
+    private Button logout;
+
+    public void avatarBtnAction(ActionEvent actionEvent) {
+        if (logout.isVisible())
+            logout.setVisible(false);
+        else
+            logout.setVisible(true);
+
     }
 }
