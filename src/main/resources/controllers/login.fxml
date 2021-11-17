@@ -14,41 +14,41 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fcfcfc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="wrongLabel" alignment="CENTER" layoutX="112.0" layoutY="447.0" prefHeight="82.0" prefWidth="285.0" textAlignment="CENTER" textFill="RED" />
-            <ImageView fitHeight="281.0" fitWidth="340.0" layoutX="87.0" layoutY="162.0" preserveRatio="true">
-               <image>
-                  <Image url="@img/login.png" />
-               </image></ImageView>
-         </children>
+         <Label fx:id="wrongLabel" alignment="CENTER" layoutX="112.0" layoutY="447.0" prefHeight="82.0"
+                prefWidth="285.0" textAlignment="CENTER" textFill="RED"/>
+         <ImageView fitHeight="281.0" fitWidth="340.0" layoutX="87.0" layoutY="162.0" preserveRatio="true">
+            <Image url="@img/login.png"/>
+         </ImageView>
       </AnchorPane>
    </left>
    <right>
       <AnchorPane prefHeight="600.0" prefWidth="498.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" layoutX="160.0" layoutY="183.0" prefHeight="36.0" prefWidth="150.0" text="Email">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="160.0" layoutY="268.0" prefWidth="150.0" text="Password">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="password" layoutX="160.0" layoutY="309.0" />
-            <Button fx:id="loginBtn" layoutX="187.0" layoutY="389.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Log In">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <TextField fx:id="email" layoutX="160.0" layoutY="224.0" />
-            <Button layoutX="81.0" layoutY="345.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="270.0" style="-fx-background-color: none;" text="You don't have an account? " />
-            <Button fx:id="signup" layoutX="284.0" layoutY="349.0" mnemonicParsing="false" onAction="#signupButtonClicked" style="-fx-background-color: none; -fx-underline: true;" text="Sign Up">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
+         <Label alignment="CENTER" layoutX="160.0" layoutY="183.0" prefHeight="36.0" prefWidth="150.0" text="Email">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0"/>
+            </font>
+         </Label>
+         <Label alignment="CENTER" layoutX="160.0" layoutY="268.0" prefWidth="150.0" text="Password">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0"/>
+            </font>
+         </Label>
+         <PasswordField fx:id="password" layoutX="160.0" layoutY="309.0"/>
+         <Button fx:id="loginBtn" layoutX="187.0" layoutY="389.0" mnemonicParsing="false" onAction="#loginButtonClicked"
+                 prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Log In">
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Button>
+         <TextField fx:id="email" layoutX="160.0" layoutY="224.0"/>
+         <Button layoutX="81.0" layoutY="345.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="270.0"
+                 style="-fx-background-color: none;" text="You don't have an account? "/>
+         <Button layoutX="284.0" layoutY="349.0" mnemonicParsing="false" onAction="#signupButtonClicked"
+                 style="-fx-background-color: none; -fx-underline: true;" text="Sign Up">
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Button>
       </AnchorPane>
    </right>
 </BorderPane>

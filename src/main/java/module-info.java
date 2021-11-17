@@ -5,6 +5,7 @@ module com.example.foodjournal {
     requires org.apache.commons.codec;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires org.json;
 
 
     opens controllers to javafx.fxml;

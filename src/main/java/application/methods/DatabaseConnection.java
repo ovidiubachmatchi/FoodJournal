@@ -16,7 +16,7 @@ public class DatabaseConnection {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            databaseLink = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodjournal",userName,password);
+            databaseLink = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/foodjournalDB",userName,password);
         }
         catch(Exception e){
             e.printStackTrace();

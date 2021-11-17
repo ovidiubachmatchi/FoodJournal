@@ -13,14 +13,13 @@ public final class UserSession {
     private static Float height= -1f;
     private static String objective="";
     private static String gender="";
-    private static String weightMeasurement="";
-    private static String heightMeasurement="";
+    private static String AMR="";
 
     public static String getFreshSignUpUsername() {
         return freshSignUpUsername;
     }
 
-    public UserSession(String email, String privileges, String username, Short age, Float weight, Float height, String objective, String gender,String weightMeasurement, String heightMeasurement) {
+    public UserSession(String email, String username ,Short age, String gender, Float weight,Float height, String objective, String privileges, String AMR) {
         this.email = email;
         this.privileges = privileges;
         this.username = username;
@@ -30,8 +29,7 @@ public final class UserSession {
         this.freshSignUpUsername= "";
         this.objective = objective;
         this.gender = gender;
-        this.weightMeasurement=weightMeasurement;
-        this.heightMeasurement=heightMeasurement;
+        this.AMR = AMR;
     }
     public UserSession(String freshSignUpUsername) {
         this.freshSignUpUsername= freshSignUpUsername;
@@ -40,10 +38,10 @@ public final class UserSession {
     public UserSession() {
     }
 
-    public static void getInstance(String email, String privileges, String username, Short age, Float weight, Float height, String objective, String gender, String weightMeasurement, String heightMeasurement) {
+    public static void getInstance(String email, String username, Short age,String gender, Float weight, Float height,  String objective, String privileges, String AMR) {
         cleanUserSession();
         if(instance == null) {
-            instance = new UserSession(email,privileges,username,age,weight,height,objective,gender,weightMeasurement,heightMeasurement);
+            instance = new UserSession( email,  username , age,  gender,  weight,  height,  objective,  privileges, AMR);
         }
     }
     public static void getInstance(String freshSignUpUsername) {
@@ -72,8 +70,7 @@ public final class UserSession {
         sb.append(", height=").append(height);
         sb.append(", objective='").append(objective).append('\'');
         sb.append(", gender='").append(gender).append('\'');
-        sb.append(", weightMeasurement='").append(weightMeasurement).append('\'');
-        sb.append(", heightMeasurement='").append(heightMeasurement).append('\'');
+        sb.append(", AMR='").append(AMR).append('\'');
         sb.append('}');
         System.out.println(sb.toString());
     }

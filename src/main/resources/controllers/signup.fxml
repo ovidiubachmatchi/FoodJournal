@@ -17,111 +17,124 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #fcfcfc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignupController">
    <right>
       <AnchorPane prefHeight="600.0" prefWidth="445.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" layoutX="20.0" layoutY="103.0" prefHeight="34.0" prefWidth="170.0" text="Username" textAlignment="CENTER">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="20.0" layoutY="189.0" prefWidth="170.0" text="Password" textAlignment="CENTER">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="password" layoutX="20.0" layoutY="226.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
-            <Button fx:id="signup" layoutX="146.0" layoutY="478.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Sign up">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <TextField fx:id="username" layoutX="20.0" layoutY="140.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
-            <Label alignment="CENTER" layoutX="20.0" layoutY="363.0" prefWidth="170.0" text="Gender" textAlignment="CENTER">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="210.0" layoutY="103.0" prefHeight="34.0" prefWidth="170.0" text="Email" textAlignment="CENTER">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="210.0" layoutY="189.0" prefWidth="170.0" text="Height">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <TextField fx:id="email" layoutX="210.0" layoutY="140.0" prefWidth="170.0" style="-fx-alignment: center;" />
-            <Label alignment="CENTER" layoutX="210.0" layoutY="276.0" prefWidth="170.0" text="Weight">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <Label layoutX="127.0" layoutY="446.0" text="Already a member? " />
-            <Button fx:id="login" layoutX="226.0" layoutY="442.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: none; -fx-underline: true;" text="Log in">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <TextField fx:id="height" layoutX="210.0" layoutY="226.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" stylesheets="@style.combobox.css" />
-            <TextField fx:id="weight" layoutX="210.0" layoutY="313.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
-            <ChoiceBox fx:id="weightChoiceBox" layoutX="329.0" layoutY="314.0" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: none;" value="kg">
+         <TextField fx:id="feet" layoutX="210.0" layoutY="156.0" prefHeight="26.0" prefWidth="60.0" promptText="Feet" style="-fx-alignment: center;" stylesheets="@style.combobox.css" visible="false" />
+         <Label alignment="CENTER" layoutX="20.0" layoutY="33.0" prefHeight="34.0" prefWidth="170.0" text="Username" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <Label alignment="CENTER" layoutX="20.0" layoutY="119.0" prefWidth="170.0" text="Password" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <PasswordField fx:id="password" layoutX="20.0" layoutY="156.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <Button fx:id="signup" layoutX="146.0" layoutY="503.0" mnemonicParsing="false" onAction="#signupButtonClicked" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #4dcbea;" text="Sign up">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+         </Button>
+         <TextField fx:id="username" layoutX="20.0" layoutY="70.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <Label alignment="CENTER" layoutX="20.0" layoutY="293.0" prefWidth="170.0" text="Gender" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <Label alignment="CENTER" layoutX="210.0" layoutY="33.0" prefHeight="34.0" prefWidth="170.0" text="Email" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <Label alignment="CENTER" layoutX="210.0" layoutY="119.0" prefWidth="170.0" text="Height">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <TextField fx:id="email" layoutX="210.0" layoutY="70.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <Label alignment="CENTER" layoutX="210.0" layoutY="206.0" prefWidth="170.0" text="Weight">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <Label layoutX="127.0" layoutY="471.0" text="Already a member? " />
+         <Button layoutX="226.0" layoutY="467.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: none; -fx-underline: true;" text="Log in">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+         </Button>
+         <TextField fx:id="height" layoutX="210.0" layoutY="156.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" stylesheets="@style.combobox.css" />
+         <TextField fx:id="weight" layoutX="210.0" layoutY="243.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <ChoiceBox fx:id="weightChoiceBox" layoutX="328.0" layoutY="244.0" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: none;" value="kg">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="kg" />
+               <String fx:value="lb" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+         <ChoiceBox fx:id="heightChoiceBox" layoutX="328.0" layoutY="156.0" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: none;" value="m">
             <items>
                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="kg" />
-                  <String fx:value="lb" />
+                  <String fx:value="m" />
+                  <String fx:value="feet" />
                </FXCollections>
             </items>
          </ChoiceBox>
-            <ChoiceBox fx:id="heightChoiceBox" layoutX="329.0" layoutY="226.0" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: none;" value="m">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="m" />
-                     <String fx:value="feet" />
-                  </FXCollections>
-               </items>
-            </ChoiceBox>
-            <ChoiceBox fx:id="genderCheckBox" layoutX="20.0" layoutY="400.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your gender">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Male" />
-                     <String fx:value="Female" />
-                     <String fx:value="Other" />
-                     <String fx:value="I prefer not to say" />
-                  </FXCollections>
-               </items>
-            </ChoiceBox>
-            <Label alignment="CENTER" layoutX="20.0" layoutY="276.0" prefWidth="170.0" text="Age" textAlignment="CENTER">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <TextField fx:id="age" layoutX="20.0" layoutY="313.0" prefWidth="170.0" style="-fx-alignment: center;" />
-            <Label alignment="CENTER" layoutX="210.0" layoutY="363.0" prefWidth="170.0" text="Objective">
-               <font>
-                  <Font name="AdobeDevanagari-Regular" size="30.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="objectiveCheckBox" layoutX="210.0" layoutY="400.0" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your objective">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Weight loss" />
-                     <String fx:value="Weight gain" />
-                     <String fx:value="Weight maintenance" />
-                  </FXCollections>
-               </items>
-            </ChoiceBox>
-         </children>
+         <ChoiceBox fx:id="genderCheckBox" layoutX="20.0" layoutY="330.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your gender">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Male" />
+                  <String fx:value="Female" />
+                  <String fx:value="Other" />
+                  <String fx:value="I prefer not to say" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
+         <Label alignment="CENTER" layoutX="20.0" layoutY="206.0" prefWidth="170.0" text="Age" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <TextField fx:id="age" layoutX="20.0" layoutY="243.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <Label alignment="CENTER" layoutX="210.0" layoutY="293.0" prefWidth="170.0" text="Objective">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <ChoiceBox fx:id="objectiveCheckBox" layoutX="210.0" layoutY="330.0" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your objective">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Weight loss" />
+                  <String fx:value="Weight gain" />
+                  <String fx:value="Weight maintenance" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
+         <TextField fx:id="inches" layoutX="272.0" layoutY="156.0" prefHeight="26.0" prefWidth="60.0" promptText="Inches" style="-fx-alignment: center;" stylesheets="@style.combobox.css" visible="false" />
+         <Label alignment="CENTER" layoutX="114.0" layoutY="380.0" prefWidth="170.0" text="Activity level" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <ChoiceBox fx:id="activityCheckBox" layoutX="114.0" layoutY="417.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your activity level">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Sedentary (little or no exercise)" />
+                  <String fx:value="Lightly active (exercise 1–3 days/week)" />
+                  <String fx:value="Moderately active (exercise 3–5 days/week)" />
+                  <String fx:value="Active (exercise 6–7 days/week)" />
+                  <String fx:value="Very active (hard exercise 6–7 days/week)" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
       </AnchorPane>
    </right>
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="393.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="281.0" fitWidth="340.0" layoutX="87.0" layoutY="162.0" preserveRatio="true">
-               <image>
-                  <Image url="@img/login.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="wrongLabel" alignment="CENTER" layoutX="138.0" layoutY="457.0" prefHeight="18.0" prefWidth="235.0" textAlignment="CENTER" textFill="RED" />
-         </children>
+         <ImageView fitHeight="281.0" fitWidth="340.0" layoutX="87.0" layoutY="162.0" preserveRatio="true">
+            <Image url="@img/login.png" />
+         </ImageView>
+         <Label fx:id="wrongLabel" alignment="CENTER" layoutX="138.0" layoutY="457.0" prefHeight="18.0" prefWidth="235.0" textAlignment="CENTER" textFill="RED" />
       </AnchorPane>
    </left>
 </BorderPane>
