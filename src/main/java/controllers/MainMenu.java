@@ -9,10 +9,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.fxml.Initializable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.json.JSONObject;
 
@@ -26,6 +28,15 @@ import static application.methods.JsonReader.scan_barcode;
 
 public class MainMenu implements Initializable {
 
+    public Button addMeal;
+    public Button cancel;
+    public Button addTheMeal;
+    public Pane underBottomSection;
+    public Pane bottomSection;
+    public Pane plusPane;
+    public Pane profilePane;
+    public Circle plusCircle1;
+    public Button avatarBtn;
     @FXML
     private Button addButton,addToJournal;
 
@@ -181,28 +192,32 @@ public class MainMenu implements Initializable {
     }
     @FXML Pane addMealPane;
     public void addMealBtn() {
-        System.out.println(addMealPane.getTranslateY());
-        if(addMealPane.getTranslateY() == 0) {
             addMealPaneTransition.setDuration(Duration.millis(200));
             addMealPaneTransition.setToY(-362);
             addMealPaneTransition.play();
-
-        }
-        if(addMealPane.getTranslateY() == -362){
+    }
+    public void cancelAddMealBtn() {
+        if (nutrimentsFacts.isVisible())
+            nutrimentsFacts.setVisible(false);
+        else {
             addMealPaneTransition.setDuration(Duration.millis(350));
             addMealPaneTransition.setToY(0);
             addMealPaneTransition.play();
         }
     }
-    @FXML Label barcodeLabel;
+    @FXML Text serving_quantity;
+    @FXML Label barcodeLabel,nutrition_data_per;
+    @FXML GridPane nutrimentsFacts;
     public void checkBarCodeBtn() throws IOException {
         JSONObject scanner = scan_barcode(barcodeField.getText());
         if( scanner.get("status").equals(0)) {
             checkBarCode.setText("ITEM NOT FOUND");
+            checkBarCode.setTextFill(Color.RED);
         }
         else {
-            checkBarCode.setText("ITEM FOUND");
+            nutrimentsFacts.setVisible(true);
+            serving_quantity.setText(scanner.getJSONObject("product").getString("serving_size"));
+            nutrition_data_per.setText(scanner.getJSONObject("product").getString("nutrition_data_per"));
         }
-        checkBarCode.setTextFill(Color.RED);
     }
 }
