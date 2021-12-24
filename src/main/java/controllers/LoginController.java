@@ -34,7 +34,10 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button loginBtn;
-
+    /**
+     *  Aceasta metoda verifica daca am completat corect campurile din view-ul de logare
+     *  si daca campurile sunt valide in baza de date atunci salvez datele in sesiunea de logare
+     */
     private void checkLogin() throws IOException {
         if (email.getText().isEmpty() || password.getText().isEmpty())
             wrongLabel.setText("Please enter your data");
@@ -43,15 +46,9 @@ public class LoginController implements Initializable {
         }
         else {
             wrongLabel.setText("");
-
             String hashedPassword = PBKDF2.getHashedPassword(password.getText());
-
-
-
             String verifyLogin = "SELECT * from users WHERE email = '" + email.getText() + "' AND password ='"+ hashedPassword +"'";
-
             try {
-
                 Connection connectDB;
                 DatabaseConnection connectNow = new DatabaseConnection();
                 connectDB = connectNow.getConnection();
@@ -66,17 +63,18 @@ public class LoginController implements Initializable {
                     wrongLabel.setText("Invalid login. Please try again.");
                 }
                 else {
-                    // email,  username , age,  gender,  weight,  height,  objective,  privileges, AMR
+                    // String email, String username ,Short age, String gender, Float weight,Float height, String objective, String privileges, String AMR, int dailyKcal
                     UserSession.getInstance(
                             email.getText(),
-                            queryResult.getString(4),
-                            queryResult.getShort(5),
-                            queryResult.getString(6),
-                            queryResult.getFloat(7),
-                            queryResult.getFloat(8),
-                            queryResult.getString(9),
-                            queryResult.getString(10),
-                            queryResult.getString(11)
+                            queryResult.getString("username"),
+                            queryResult.getShort("age"),
+                            queryResult.getString("gender"),
+                            queryResult.getFloat("weight"),
+                            queryResult.getFloat("height"),
+                            queryResult.getString("objective"),
+                            queryResult.getString("privileges"),
+                            queryResult.getString("AMR"),
+                            queryResult.getInt("dailyKcal")
                     );
                     Application.changeScene("mainMenu.fxml");
                 }

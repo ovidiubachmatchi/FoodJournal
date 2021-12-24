@@ -9,8 +9,6 @@ public class DatabaseConnection {
 
     public Connection getConnection(){
 
-        final String server="localhost:3306/";
-        final String db_name= "controllers";
         final String userName="root";
         final String password="";
 

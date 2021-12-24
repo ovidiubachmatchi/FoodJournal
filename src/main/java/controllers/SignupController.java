@@ -41,6 +41,10 @@ public class SignupController implements Initializable {
     }
     @FXML
     private TextField inches,feet;
+    /**
+     *  Aceasta metoda schimba campurile de text in functie de varianta de masurare aleasa in choiceBox
+     *  respectiv feet sau meters
+     */
     private void heightChoiceBoxChange(ActionEvent actionEvent) {
         if(heightChoiceBox.getValue().equals("feet"))
         {
@@ -60,7 +64,10 @@ public class SignupController implements Initializable {
     protected void loginButtonClicked() throws IOException {
         Application.changeScene("login.fxml");
     }
-
+    /**
+     *  Aceasta metoda verifica daca am completat corect toate campurile din sectiunea de inregistrare
+     *  daca toate campurile sunt completate corect atunci am sa introduc datele in database
+     */
     private void signup() throws IOException {
         if (!fieldsUncompleted())
             return;
@@ -104,10 +111,52 @@ public class SignupController implements Initializable {
                 System.out.println("User already exists!");
                 wrongLabel.setText("This email is already taken");
             } else {
-                DecimalFormat f = new DecimalFormat("###.00");
+                DecimalFormat f = new DecimalFormat("###.##");
                 psInsert = connectDB.prepareStatement(
-                        "INSERT INTO users (email, username, password, weight, height, objective, age, gender, AMR) VALUES (?,?,?,?,?,?,?,?,?)"
+                        "INSERT INTO users (email, username, password, weight, height, objective, age, gender, AMR, dailyKcal) VALUES (?,?,?,?,?,?,?,?,?, ?)"
                 );
+                double bmr ;
+                int _age = Integer.parseInt(age.getText());
+                int _heightCM;
+                float _kg;
+                if (heightChoiceBox.getValue().equals("feet")){
+                    float cm = ((float)(((int) ((Integer.parseInt(feet.getText()) * 30.48) + (Integer.parseInt(inches.getText()) * 2.54)))))/100;
+                    psInsert.setFloat(5, cm);
+                    _heightCM = (int) (cm * 100);
+                }
+                else {
+                    psInsert.setFloat(5, Float.parseFloat(f.format(Float.parseFloat(height.getText()))));
+                    _heightCM = (int) (Float.parseFloat(f.format(Float.parseFloat(height.getText()))) * 100);
+                }
+                if (weightChoiceBox.getValue().equals("kg")){
+                    psInsert.setFloat(4, Float.parseFloat(f.format(Float.parseFloat(weight.getText()))));
+                    _kg = Float.parseFloat(f.format(Float.parseFloat(weight.getText())));
+                }
+                else {
+                    float kg = Float.parseFloat(f.format(Float.parseFloat(f.format(Float.parseFloat(weight.getText())))*0.4536));
+                    psInsert.setFloat(4, kg);
+                    _kg = kg;
+                }
+                if (genderCheckBox.getValue().charAt(0) == 'M')
+                    bmr = 66.47 + (13.75 * _kg) + (5.003 * _heightCM) - (6.755 * _age);
+                else
+                    bmr = 655.1 + (9.563 * _kg) + (1.850 * _heightCM) - (4.676 * _age);
+                float daily = 0;
+                if (activityCheckBox.getValue().charAt(0) == 'S')
+                    daily = (float) (bmr * 1.2);
+                if (activityCheckBox.getValue().charAt(0) == 'L')
+                    daily = (float) (bmr * 1.375);
+                if (activityCheckBox.getValue().charAt(0) == 'M')
+                    daily = (float) (bmr * 1.55);
+                if (activityCheckBox.getValue().charAt(0) == 'A')
+                    daily = (float) (bmr * 1.725);
+                if (activityCheckBox.getValue().charAt(0) == 'V')
+                    daily = (float) (bmr * 1.9);
+                if (objectiveCheckBox.getValue().charAt(7) == 'g')
+                    daily += 500;
+                if (objectiveCheckBox.getValue().charAt(7) == 'l')
+                    daily -= 500;
+                psInsert.setFloat(10, daily); // daily kcal
                 psInsert.setString(1, email.getText());
                 psInsert.setString(2, username.getText());
                 psInsert.setString(3, hashedPassword);
@@ -115,20 +164,6 @@ public class SignupController implements Initializable {
                 psInsert.setString(9, String.valueOf(activityCheckBox.getValue().charAt(0)));
                 psInsert.setInt(7, Integer.parseInt(age.getText()));
                 psInsert.setString(8, String.valueOf(genderCheckBox.getValue().charAt(0)));
-                if (weightChoiceBox.getValue().equals("kg")){
-                    psInsert.setFloat(4, Float.parseFloat(f.format(Float.parseFloat(weight.getText()))));
-                }
-                if (weightChoiceBox.getValue().equals("lb")) {
-                    float kg = Float.parseFloat(f.format(Float.parseFloat(f.format(Float.parseFloat(weight.getText())))*0.4536));
-                    psInsert.setFloat(4, kg);
-                }
-                if (heightChoiceBox.getValue().equals("feet")){
-                    float cm = ((float)(((int) ((Integer.parseInt(feet.getText()) * 30.48) + (Integer.parseInt(inches.getText()) * 2.54)))))/100;
-                    psInsert.setFloat(5, cm);
-                }
-                if (heightChoiceBox.getValue().equals("m")) {
-                    psInsert.setFloat(5, Float.parseFloat(f.format(Float.parseFloat(height.getText()))));
-                }
                 psInsert.executeUpdate();
                 UserSession.getInstance(
                         username.getText()
@@ -141,7 +176,6 @@ public class SignupController implements Initializable {
         }
 
     }
-
     private boolean ageCheck() {
         if (whRegex(age.getText(), "round"))
         {

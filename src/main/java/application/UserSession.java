@@ -14,12 +14,13 @@ public final class UserSession {
     private static String objective="";
     private static String gender="";
     private static String AMR="";
+    private static int dailyKcal=0;
 
     public static String getFreshSignUpUsername() {
         return freshSignUpUsername;
     }
 
-    public UserSession(String email, String username ,Short age, String gender, Float weight,Float height, String objective, String privileges, String AMR) {
+    public UserSession(String email, String username ,Short age, String gender, Float weight,Float height, String objective, String privileges, String AMR, int dailyKcal) {
         this.email = email;
         this.privileges = privileges;
         this.username = username;
@@ -30,6 +31,7 @@ public final class UserSession {
         this.objective = objective;
         this.gender = gender;
         this.AMR = AMR;
+        this.dailyKcal = dailyKcal;
     }
     public UserSession(String freshSignUpUsername) {
         this.freshSignUpUsername= freshSignUpUsername;
@@ -38,10 +40,70 @@ public final class UserSession {
     public UserSession() {
     }
 
-    public static void getInstance(String email, String username, Short age,String gender, Float weight, Float height,  String objective, String privileges, String AMR) {
+    public static void setDailyKcal(int dailyKcal) {
+        UserSession.dailyKcal = dailyKcal;
+    }
+
+    public static void setUsername(String username) {
+        UserSession.username = username;
+    }
+
+    public static void setAge(Short age) {
+        UserSession.age = age;
+    }
+
+    public static void setObjective(String objective) {
+        UserSession.objective = objective;
+    }
+
+    public static void setGender(String gender) {
+        UserSession.gender = gender;
+    }
+
+    public static int getDailyKcal() {
+        return dailyKcal;
+    }
+
+    public static void setWeight(Float weight) {
+        UserSession.weight = weight;
+    }
+
+    public static void setHeight(Float height) {
+        UserSession.height = height;
+    }
+
+    public static String getEmail(){
+        return email;
+    }
+
+    public static String getPrivileges() {
+        return privileges;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static Short getAge() {
+        return age;
+    }
+
+    public static String getObjective() {
+        return objective;
+    }
+
+    public static String getGender() {
+        return gender;
+    }
+
+    public static String getAMR() {
+        return AMR;
+    }
+
+    public static void getInstance(String email, String username, Short age, String gender, Float weight, Float height, String objective, String privileges, String AMR, int dailyKcal) {
         cleanUserSession();
         if(instance == null) {
-            instance = new UserSession( email,  username , age,  gender,  weight,  height,  objective,  privileges, AMR);
+            instance = new UserSession( email,  username , age,  gender,  weight,  height,  objective,  privileges, AMR, dailyKcal);
         }
     }
     public static void getInstance(String freshSignUpUsername) {
@@ -59,27 +121,15 @@ public final class UserSession {
         instance = null;
     }
 
-    public static void echo() {
-        final StringBuilder sb = new StringBuilder("UserSession{");
-        sb.append("newUser='").append(freshSignUpUsername).append('\'');
-        sb.append("email='").append(email).append('\'');
-        sb.append(", privileges='").append(privileges).append('\'');
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", age=").append(age);
-        sb.append(", weight=").append(weight);
-        sb.append(", height=").append(height);
-        sb.append(", objective='").append(objective).append('\'');
-        sb.append(", gender='").append(gender).append('\'');
-        sb.append(", AMR='").append(AMR).append('\'');
-        sb.append('}');
-        System.out.println(sb.toString());
-    }
-
     public static Float getWeight() {
         return weight;
     }
 
     public static Float getHeight() {
         return height;
+    }
+
+    public static void setAMR(String AMR) {
+        UserSession.AMR = AMR;
     }
 }

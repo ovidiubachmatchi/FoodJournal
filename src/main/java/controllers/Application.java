@@ -23,9 +23,12 @@ public class Application extends javafx.application.Application {
         stage.setResizable(false);
         stage.getIcons().add(new Image("file:logo.png"));
         stage.show();
-
     }
-
+    /**
+     * This method changes the scene from the main stage
+     *
+     * @param fxml a string with the name of the fxml file
+     */
     public static void changeScene(String fxml) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml)));
         stg.getScene().setRoot(pane);

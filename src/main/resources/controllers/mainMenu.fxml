@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -9,380 +16,507 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="900.0" style="-fx-background-color: #e4e4e4;" xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenu">
-   <Pane fx:id="background" prefHeight="509.0" prefWidth="900.0"/>
-   <Pane fx:id="plusSection" layoutX="269.0" layoutY="600.0" prefHeight="270.0" prefWidth="400.0"
-         style="-fx-background-color: white; -fx-background-radius: 2em 2em 0 0;">
-      <TextField fx:id="weightFieldAddKG" alignment="TOP_CENTER" layoutX="63.0" layoutY="51.0" prefHeight="25.0"
-                 prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
-         <cursor>
-            <Cursor fx:constant="TEXT"/>
-         </cursor>
-      </TextField>
-      <TextField fx:id="heightFieldAddFEET" alignment="TOP_CENTER" layoutX="286.0" layoutY="51.0" prefWidth="51.0"
-                 style="-fx-background-radius: 1em; -fx-alignment: center;"/>
-      <Label fx:id="weightLabelAdd" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="20.0"
-             prefHeight="25.0" prefWidth="149.0" text="Weight" textAlignment="CENTER">
-         <font>
-            <Font name="Candara Light" size="20.0"/>
-         </font>
-      </Label>
-      <DatePicker fx:id="datePickerAdd" layoutX="75.0" layoutY="107.0" prefHeight="25.0" prefWidth="100.0"
-                  style="-fx-border-radius: 1em;"/>
-      <Label fx:id="heightLabelAdd" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="20.0"
-             prefHeight="25.0" prefWidth="149.0" text="Height" textAlignment="CENTER">
-         <font>
-            <Font name="Candara Light" size="20.0"/>
-         </font>
-      </Label>
-      <Button fx:id="addMeal" alignment="CENTER" layoutX="225.0" layoutY="101.0" mnemonicParsing="false"
-              onAction="#addMealBtn" prefHeight="36.0" prefWidth="100.0"
-              style="-fx-background-color: white; -fx-border-color: lightgray; -fx-background-radius: 0.5em; -fx-border-radius: 1em;"
-              text="Add meal" textAlignment="CENTER">
-         <font>
-            <Font name="Candara" size="18.0"/>
-         </font>
-      </Button>
-      <Button fx:id="addToJournal" alignment="CENTER" layoutX="133.0" layoutY="164.0" mnemonicParsing="false"
-              style="-fx-background-color: lightgreen; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;"
-              text="Add to journal" textAlignment="CENTER">
-         <font>
-            <Font name="Candara" size="18.0"/>
-         </font>
-      </Button>
-      <TextField fx:id="weightFieldAddLB" alignment="TOP_CENTER" layoutX="136.0" layoutY="51.0" prefHeight="25.0"
-                 prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
-         <cursor>
-            <Cursor fx:constant="TEXT"/>
-         </cursor>
-      </TextField>
-      <TextField fx:id="heightFieldAddM" alignment="TOP_CENTER" layoutX="214.0" layoutY="51.0" prefWidth="51.0"
-                 style="-fx-background-radius: 1em; -fx-alignment: center;"/>
-      <Label layoutX="121.0" layoutY="55.0" text="~"/>
-      <Label layoutX="271.0" layoutY="55.0" text="~"/>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="76.0" prefHeight="17.0"
-             prefWidth="51.0" text="KG"/>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="76.0" prefHeight="17.0"
-             prefWidth="51.0" text="LB"/>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #e4e4e4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenu">
+   <Pane fx:id="background" layoutY="5.0" prefHeight="509.0" prefWidth="900.0">
+      <children>
+         <Pane fx:id="KCALGoalPane" layoutX="204.0" layoutY="14.0" prefHeight="290.0" prefWidth="497.0" style="-fx-background-color: white; -fx-background-radius: 2em;">
+            <children>
+               <DatePicker fx:id="goalDatePicker" editable="false" layoutX="199.0" layoutY="219.0" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: white;" />
+               <FlowPane fx:id="eaten" layoutX="47.0" layoutY="100.0" prefHeight="54.0" prefWidth="80.0">
+                  <children>
+                     <Text fill="#001b3e" strokeType="OUTSIDE" strokeWidth="0.0" text="🍲 EATEN" wrappingWidth="82.80394124984741">
+                        <font>
+                           <Font size="17.0" />
+                        </font>
+                     </Text>
+                     <Text fx:id="goalKCALEaten" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="0000" wrappingWidth="60.0">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Text>
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="kcal" textAlignment="RIGHT" wrappingWidth="26.119565963745117" />
+                  </children>
+               </FlowPane>
+               <Label fx:id="todayLabel" alignment="CENTER" layoutX="203.0" layoutY="224.0" prefHeight="17.0" prefWidth="66.0" style="-fx-background-color: white;" text="Today" textAlignment="CENTER" />
+               <FlowPane fx:id="burned" layoutX="369.0" layoutY="123.0" prefHeight="19.0" prefWidth="90.0">
+                  <children>
+                     <Text fx:id="goalKCALBurned" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="  0000" wrappingWidth="60.0">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Text>
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="kcal" textAlignment="RIGHT" wrappingWidth="26.119565963745117" />
+                  </children>
+               </FlowPane>
+               <Text fx:id="burnedSymbol" fill="#001b3e" layoutX="366.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="🔥BURNED" wrappingWidth="87.60392904281616">
+                  <font>
+                     <Font size="17.0" />
+                  </font>
+               </Text>
+               <Line fx:id="lineSymbol" endX="-8.199981689453125" endY="32.0" layoutX="280.0" layoutY="212.0" startX="-8.199981689453125" startY="7.0" stroke="WHITE" strokeWidth="2.0" />
+            </children>
+         </Pane>
+      </children>
    </Pane>
-   <Pane fx:id="addMealPane" layoutX="269.0" layoutY="600.0" prefHeight="270.0" prefWidth="400.0"
-         style="-fx-background-color: white; -fx-background-radius: 2em 2em 0 0;">
-      <TextField fx:id="barcodeField" alignment="TOP_CENTER" layoutX="75.0" layoutY="51.0" prefHeight="25.0"
-                 prefWidth="250.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
+   <PieChart fx:id="testChart" labelsVisible="false" layoutX="320.0" layoutY="31.0" legendVisible="false" prefHeight="191.0" prefWidth="260.0" startAngle="90.0" />
+   <Circle fx:id="testCircle" fill="WHITE" layoutX="450.0" layoutY="126.0" radius="71.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+   <FlowPane fx:id="kcalLeft" layoutX="383.0" layoutY="86.0" prefHeight="91.0" prefWidth="134.0">
+      <children>
+         <Text fx:id="goalKCALGoal" strokeType="OUTSIDE" strokeWidth="0.0" text="0000" textAlignment="CENTER" wrappingWidth="132.4000244140625">
+            <font>
+               <Font name="System Bold" size="43.0" />
+            </font>
+         </Text>
+         <Text fx:id="kcalLeftText" fill="#001b3e" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed" textAlignment="CENTER" wrappingWidth="133.20001220703125">
+            <font>
+               <Font size="19.0" />
+            </font>
+         </Text>
+      </children>
+   </FlowPane>
+   <Button fx:id="changeKCALGoalBTN" layoutX="391.0" layoutY="99.0" mnemonicParsing="false" onAction="#changeKCALGoal" prefHeight="72.0" prefWidth="114.0" style="-fx-background-color: none;">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+   <Pane fx:id="newKcalGoalPane" layoutX="315.0" layoutY="216.0" prefHeight="141.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 2em;" visible="false">
+      <children>
+         <Text layoutX="65.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Set a new goal">
+            <font>
+               <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+         </Text>
+         <TextField fx:id="newKcalValue" layoutX="52.0" layoutY="47.0" style="-fx-border-radius: 5em; -fx-background-radius: 5em;" />
+         <Button alignment="CENTER" layoutX="58.0" layoutY="90.0" mnemonicParsing="false" onAction="#updateKCALGoal" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: lightgreen; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;" text="Update" textAlignment="CENTER">
+            <font>
+               <Font name="Candara" size="18.0" />
+            </font>
+         </Button>
+         <Label fx:id="dailyJCAKGoalErrorLabel" alignment="CENTER" layoutX="33.0" layoutY="9.0" prefHeight="22.0" prefWidth="190.0" style="-fx-background-color: white;" text="Please type your new daily goal" textAlignment="CENTER" textFill="RED" visible="false" />
+      </children>
+   </Pane>
+   <LineChart fx:id="weeklyChart" layoutX="165.0" layoutY="232.0" prefHeight="234.0" prefWidth="552.0" title="Weekly progress" visible="false">
+     <xAxis>
+       <CategoryAxis side="BOTTOM" />
+     </xAxis>
+     <yAxis>
+       <NumberAxis side="LEFT" />
+     </yAxis>
+   </LineChart>
+   <Pane fx:id="plusSection" layoutX="251.0" layoutY="600.0" prefHeight="270.0" prefWidth="400.0" style="-fx-background-color: white; -fx-background-radius: 2em 2em 0 0;">
+      <TextField fx:id="weightFieldAddKG" alignment="TOP_CENTER" layoutX="63.0" layoutY="51.0" prefHeight="25.0" prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
          <cursor>
-            <Cursor fx:constant="TEXT"/>
+            <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="barcodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="78.0" layoutY="14.0"
-             prefHeight="25.0" prefWidth="250.0" text="Bar code" textAlignment="CENTER">
+      <TextField fx:id="heightFieldAddFEET" alignment="TOP_CENTER" layoutX="286.0" layoutY="51.0" prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;" />
+      <Label fx:id="weightLabelAdd" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="20.0" prefHeight="25.0" prefWidth="149.0" text="Weight" textAlignment="CENTER">
          <font>
-            <Font name="Candara Light" size="20.0"/>
+            <Font name="Candara Light" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="scan" alignment="CENTER" disable="true" layoutX="118.0" layoutY="110.0" mnemonicParsing="false"
-              prefHeight="36.0" prefWidth="166.0"
-              style="-fx-background-color: white; -fx-border-color: lightgray; -fx-background-radius: 0.5em; -fx-border-radius: 1em;"
-              text="Scan with camera" textAlignment="CENTER">
+      <DatePicker fx:id="datePickerAdd" editable="false" layoutX="149.0" layoutY="110.0" prefHeight="25.0" prefWidth="100.0" style="-fx-border-radius: 1em; -fx-background-color: white;" />
+      <Label fx:id="heightLabelAdd" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="20.0" prefHeight="25.0" prefWidth="149.0" text="Height" textAlignment="CENTER">
          <font>
-            <Font name="Candara" size="18.0"/>
+            <Font name="Candara Light" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="addToJournal" alignment="CENTER" layoutX="125.0" layoutY="167.0" mnemonicParsing="false" onAction="#addMealBtn" prefHeight="36.0" prefWidth="149.0" style="-fx-background-color: lightblue; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;" text="Add Food" textAlignment="CENTER">
+         <font>
+            <Font name="Candara" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="cancel" alignment="CENTER" layoutX="231.0" layoutY="181.0" mnemonicParsing="false"
-              onAction="#cancelAddMealBtn" prefHeight="36.0" prefWidth="134.0"
-              style="-fx-background-color: red; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;"
-              text="Cancel" textAlignment="CENTER">
+      <TextField fx:id="weightFieldAddLB" alignment="TOP_CENTER" layoutX="136.0" layoutY="51.0" prefHeight="25.0" prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <TextField fx:id="heightFieldAddM" alignment="TOP_CENTER" layoutX="214.0" layoutY="51.0" prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;" />
+      <Label layoutX="121.0" layoutY="55.0" text="~" />
+      <Label layoutX="271.0" layoutY="55.0" text="~" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="76.0" prefHeight="17.0" prefWidth="51.0" text="KG" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="76.0" prefHeight="17.0" prefWidth="51.0" text="LB" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="214.0" layoutY="76.0" prefHeight="17.0" prefWidth="51.0" text="M" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="286.0" layoutY="76.0" prefHeight="17.0" prefWidth="51.0" text="FEET" />
+      <Label fx:id="todayLabelAdd" alignment="CENTER" layoutX="153.0" layoutY="115.0" prefHeight="17.0" prefWidth="66.0" style="-fx-background-color: white;" text="Today" textAlignment="CENTER" />
+   </Pane>
+   <Pane fx:id="addMealPane" layoutX="251.0" layoutY="600.0" prefHeight="270.0" prefWidth="400.0" style="-fx-background-color: white; -fx-background-radius: 2em 2em 0 0;">
+      <TextField fx:id="barcodeField" alignment="TOP_CENTER" layoutX="75.0" layoutY="51.0" prefHeight="25.0" prefWidth="250.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Label fx:id="barcodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="78.0" layoutY="14.0" prefHeight="25.0" prefWidth="250.0" text="Bar code" textAlignment="CENTER">
          <font>
-            <Font name="Candara" size="18.0"/>
+            <Font name="Candara Light" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="scanWithCameraBTN" alignment="CENTER" layoutX="118.0" layoutY="110.0" mnemonicParsing="false" onAction="#scanWithCameraCall" prefHeight="36.0" prefWidth="166.0" style="-fx-background-color: white; -fx-border-color: lightgray; -fx-background-radius: 0.5em; -fx-border-radius: 1em;" text="Scan with camera" textAlignment="CENTER">
+         <font>
+            <Font name="Candara" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="cancel" alignment="CENTER" layoutX="231.0" layoutY="181.0" mnemonicParsing="false" onAction="#cancelAddMealBtn" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: #f25252; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;" text="Cancel" textAlignment="CENTER">
+         <font>
+            <Font name="Candara" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="addTheMeal" alignment="CENTER" disable="true" layoutX="45.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTheMealBtn" prefHeight="36.0" prefWidth="134.0" style="-fx-background-color: lightgreen; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;" text="Add the meal" textAlignment="CENTER">
+         <font>
+            <Font name="Candara" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="checkBarCode" alignment="CENTER" layoutX="117.0" layoutY="110.0" mnemonicParsing="false" onAction="#checkBarCodeBtn" prefHeight="36.0" prefWidth="166.0" style="-fx-background-color: white; -fx-border-color: lightgray; -fx-background-radius: 0.5em; -fx-border-radius: 1em;" text="Check bar code" textAlignment="CENTER" visible="false">
+         <font>
+            <Font name="Candara" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="addTheMeal" alignment="CENTER" layoutX="45.0" layoutY="180.0" mnemonicParsing="false"
-              prefHeight="36.0" prefWidth="134.0"
-              style="-fx-background-color: lightgreen; -fx-border-color: lightgray; -fx-background-radius: 1em; -fx-border-radius: 1em;"
-              text="Add the meal" textAlignment="CENTER">
-         <font>
-            <Font name="Candara" size="18.0"/>
-         </font>
-      </Button>
-      <Button fx:id="checkBarCode" alignment="CENTER" layoutX="117.0" layoutY="110.0" mnemonicParsing="false"
-              onAction="#checkBarCodeBtn" prefHeight="36.0" prefWidth="166.0"
-              style="-fx-background-color: white; -fx-border-color: lightgray; -fx-background-radius: 0.5em; -fx-border-radius: 1em;"
-              text="Check bar code" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Candara" size="18.0"/>
-         </font>
-      </Button>
-      <GridPane fx:id="nutrimentsFacts" layoutX="8.0" layoutY="6.0" prefHeight="168.0" prefWidth="383.0"
-                style="-fx-background-color: white;" visible="false">
+      <GridPane fx:id="nutrimentsFacts" layoutX="8.0" layoutY="6.0" prefHeight="168.0" prefWidth="383.0" style="-fx-background-color: white;" visible="false">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.rowIndex="1">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.columnIndex="4">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="77.0">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="Fat" textFill="WHITE"/>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="35.0" prefHeight="17.0" prefWidth="46.0"
-                   text="0g" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0" text="Fat" textFill="WHITE" />
+            <Label fx:id="fat_100g" alignment="CENTER" layoutX="15.0" layoutY="35.0" prefHeight="17.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="0g">
+            <Label fx:id="fat_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
          </Pane>
          <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="Energy" textFill="WHITE"/>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="35.0" prefHeight="17.0" prefWidth="46.0"
-                   text="139kcal" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0" text="Energy" textFill="WHITE" />
+            <Label fx:id="energy_kcal_100g" alignment="CENTER" layoutX="15.0" layoutY="35.0" prefHeight="17.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="42kcal">
+            <Label fx:id="energy_kcal_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
          </Pane>
          <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="Salt" textFill="WHITE"/>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0"
-                   text="0g" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0" text="Salt" textFill="WHITE" />
+            <Label fx:id="salt_100g" alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="42kcal">
+            <Label fx:id="salt_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
          </Pane>
          <Pane prefHeight="200.0" prefWidth="200.0">
-            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="Proteins" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0" text="Proteins" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0"
-                   text="0g" textFill="WHITE">
+            <Label fx:id="proteins_100g" alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="42kcal">
+            <Label fx:id="proteins_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
          </Pane>
          <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-            <Label alignment="CENTER" layoutX="15.0" layoutY="12.0" prefHeight="15.0" prefWidth="47.0"
-                   text="Satured" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="15.0" layoutY="12.0" prefHeight="15.0" prefWidth="47.0" text="Satured" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="35.0" prefHeight="17.0" prefWidth="46.0"
-                   text="0g" textFill="WHITE">
+            <Label fx:id="saturated_fat_100g" alignment="CENTER" layoutX="15.0" layoutY="35.0" prefHeight="17.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="0g">
+            <Label fx:id="saturated_fat_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="23.0" prefHeight="15.0" prefWidth="47.0"
-                   text="Fat" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="15.0" layoutY="23.0" prefHeight="15.0" prefWidth="47.0" text="Fat" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
          </Pane>
          <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
-            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="Energy" textFill="WHITE"/>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0"
-                   text="139kcal" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="14.0" layoutY="1.0" prefHeight="37.0" prefWidth="48.0" text="Carbo" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+            <Label fx:id="carbohydrates_100g" alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="19.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="42kcal">
+            <Label fx:id="carbohydrates_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
+            <Label alignment="CENTER" layoutX="15.0" layoutY="11.0" prefHeight="37.0" prefWidth="48.0" text="hydrates" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
          </Pane>
          <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="Sugars" textFill="WHITE"/>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0"
-                   text="35g" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0" text="Sugars" textFill="WHITE" />
+            <Label fx:id="sugars_100g" alignment="CENTER" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="46.0" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0"
-                   text="10.6g">
+            <Label fx:id="sugars_serving" alignment="CENTER" layoutX="15.0" layoutY="51.0" prefHeight="17.0" prefWidth="46.0">
                <font>
-                  <Font size="10.0"/>
+                  <Font size="10.0" />
                </font>
             </Label>
          </Pane>
-         <Label alignment="CENTER" prefHeight="84.0" prefWidth="106.0" text="Coca Cola" wrapText="true"
-                GridPane.columnIndex="1">
+         <Label fx:id="product_name_en" alignment="CENTER" prefHeight="84.0" prefWidth="106.0" text="Coca Cola" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
             <font>
-               <Font name="System Bold" size="12.0"/>
+               <Font name="System Bold" size="12.0" />
             </font>
          </Label>
          <ImageView fitHeight="72.0" fitWidth="77.0" GridPane.columnIndex="2">
-            <Image url="@img/ex.png"/>
+            <Image url="@img/ex.png" />
          </ImageView>
          <Pane prefHeight="140.0" prefWidth="78.0" GridPane.columnIndex="2">
-            <Text fx:id="serving_quantity" layoutX="3.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                  textAlignment="CENTER" wrappingWidth="70.5">
+            <Text fx:id="serving_quantity" layoutX="3.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="70.5">
                <font>
-                  <Font size="9.0"/>
+                  <Font size="9.0" />
                </font>
             </Text>
-            <Label alignment="CENTER" layoutX="4.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0"
-                   text="serving" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="4.0" layoutY="15.0" prefHeight="17.0" prefWidth="68.0" text="serving" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="11.0"/>
+                  <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="nutrition_data_per" alignment="CENTER" layoutX="4.0" layoutY="35.0" prefHeight="17.0"
-                   prefWidth="68.0" textFill="WHITE">
+            <Label fx:id="nutrition_data_per" alignment="CENTER" layoutX="4.0" layoutY="35.0" prefHeight="17.0" prefWidth="68.0" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="11.0"/>
+                  <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="3.0" layoutY="24.0" prefHeight="17.0" prefWidth="68.0"
-                   text="per" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="3.0" layoutY="24.0" prefHeight="17.0" prefWidth="68.0" text="per" textFill="WHITE">
                <font>
-                  <Font size="11.0"/>
+                  <Font size="11.0" />
                </font>
             </Label>
          </Pane>
+         <Label fx:id="quantity" alignment="CENTER" prefHeight="84.0" prefWidth="106.0" text="Coca Cola" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
       </GridPane>
+      <Pane fx:id="addTheMealPane" layoutX="6.0" layoutY="11.0" prefHeight="158.0" prefWidth="386.0" style="-fx-background-color: white;" visible="false">
+         <children>
+            <ChoiceBox fx:id="serving" layoutX="143.0" layoutY="31.0" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: lightgray;">
+            </ChoiceBox>
+            <TextField fx:id="serving_value" layoutX="172.0" layoutY="90.0" prefHeight="25.0" prefWidth="44.0" style="-fx-border-color: lightgray;" />
+            <Text fx:id="serving_metric" layoutX="176.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="33.02618408203125" />
+            <Button layoutX="122.0" layoutY="90.0" mnemonicParsing="false" onAction="#serving_minus" style="-fx-border-radius: 2em; -fx-background-color: lightgray;" text="-">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="243.0" layoutY="90.0" mnemonicParsing="false" onAction="#serving_plus" style="-fx-border-radius: 2em; -fx-background-color: lightgray;" text="+" />
+         </children>
+      </Pane>
+      <FlowPane fx:id="cameraPane" layoutY="-141.0" prefHeight="300.0" prefWidth="400.0" visible="false" />
    </Pane>
-   <Pane fx:id="underBottomSection" layoutX="204.0" layoutY="588.0" prefHeight="12.0" prefWidth="527.0"
-         style="-fx-background-color: #e4e4e4;"/>
-   <Pane fx:id="bottomSection" layoutX="10.0" layoutY="508.0" prefHeight="80.0" prefWidth="880.0"
-         style="-fx-background-color: white; -fx-background-radius: 1em; -fx-border-radius: 1em;">
-      <Pane fx:id="plusPane" layoutX="419.0" layoutY="-31.0" prefHeight="78.0" prefWidth="76.0">
+   <Pane fx:id="underBottomSection" layoutX="204.0" layoutY="588.0" prefHeight="12.0" prefWidth="527.0" style="-fx-background-color: #e4e4e4;" />
+   <Pane fx:id="bottomSection" layoutX="10.0" layoutY="508.0" prefHeight="80.0" prefWidth="880.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-border-radius: 1em;">
+      <Pane fx:id="plusPane" layoutX="402.0" layoutY="-32.0" prefHeight="78.0" prefWidth="76.0">
          <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
          </cursor>
-         <Circle fx:id="plusCircle1" fill="#e4e4e4" layoutX="40.0" layoutY="40.0" radius="50.0" stroke="BLACK"
-                 strokeType="INSIDE" style="-fx-fill: #e4e4e4; -fx-stroke: none;"/>
-         <Circle fx:id="plusCircle2" fill="DODGERBLUE" layoutX="40.0" layoutY="40.0" radius="40.0" stroke="BLACK"
-                 strokeType="INSIDE" style="-fx-fill: #5d91f2; -fx-stroke: none;"/>
-         <Circle fx:id="plusCircle3" fill="DODGERBLUE" layoutX="40.0" layoutY="40.0" radius="35.0" stroke="BLACK"
-                 strokeType="INSIDE" style="-fx-fill: #3779fc; -fx-stroke: none;"/>
-         <Label fx:id="plusLabel" alignment="CENTER" layoutX="-5.0" layoutY="-5.0" prefHeight="90.0"
-                prefWidth="90.0" style="-fx-background-color: none;" text="+" textAlignment="CENTER"
-                textFill="WHITE">
+         <Circle fx:id="plusCircle1" fill="#e4e4e4" layoutX="40.0" layoutY="40.0" radius="50.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #e4e4e4; -fx-stroke: none;" />
+         <Circle fx:id="plusCircle2" fill="DODGERBLUE" layoutX="40.0" layoutY="40.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #5d91f2; -fx-stroke: none;" />
+         <Circle fx:id="plusCircle3" fill="DODGERBLUE" layoutX="40.0" layoutY="40.0" radius="35.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #3779fc; -fx-stroke: none;" />
+         <Label fx:id="plusLabel" alignment="CENTER" layoutX="-5.0" layoutY="-5.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: none;" text="+" textAlignment="CENTER" textFill="WHITE">
             <font>
-               <Font name="Impact" size="74.0"/>
+               <Font name="Impact" size="74.0" />
             </font>
             <cursor>
-               <Cursor fx:constant="DEFAULT"/>
+               <Cursor fx:constant="DEFAULT" />
             </cursor>
          </Label>
-         <Label fx:id="minusLabel" alignment="CENTER" layoutX="-5.0" layoutY="-10.0" prefHeight="90.0"
-                prefWidth="90.0" style="-fx-background-color: none;" text="-" textAlignment="CENTER"
-                textFill="WHITE" visible="false">
+         <Label fx:id="minusLabel" alignment="CENTER" layoutX="-5.0" layoutY="-10.0" prefHeight="90.0" prefWidth="90.0" style="-fx-background-color: none;" text="-" textAlignment="CENTER" textFill="WHITE" visible="false">
             <font>
-               <Font name="Impact" size="74.0"/>
+               <Font name="Impact" size="74.0" />
             </font>
             <cursor>
-               <Cursor fx:constant="DEFAULT"/>
+               <Cursor fx:constant="DEFAULT" />
             </cursor>
          </Label>
-         <Button fx:id="addButton" alignment="CENTER" layoutX="4.0" layoutY="5.0" mnemonicParsing="false"
-                 onAction="#addButtonAction" prefHeight="80.0" prefWidth="80.0"
-                 style="-fx-background-color: none;">
+         <Button fx:id="addButton" alignment="CENTER" layoutX="4.0" layoutY="5.0" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: none;">
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
             </cursor>
          </Button>
       </Pane>
    </Pane>
    <Pane fx:id="profilePane" layoutX="801.0" layoutY="-1.0" prefHeight="181.0" prefWidth="100.0">
       <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="10.0" layoutY="8.0">
-         <Image url="@img/output-onlinepngtools.png"/>
+         <Image url="@img/output-onlinepngtools.png" />
       </ImageView>
-      <Button fx:id="avatarBtn" layoutX="25.0" layoutY="21.0" mnemonicParsing="false" onAction="#avatarBtnAction"
-              prefHeight="54.0" prefWidth="51.0" style="-fx-background-color: none; -fx-border-color: none;">
+      <Button fx:id="avatarBtn" layoutX="25.0" layoutY="21.0" mnemonicParsing="false" onAction="#avatarBtnAction" prefHeight="54.0" prefWidth="51.0" style="-fx-background-color: none; -fx-border-color: none;">
          <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="logout" layoutX="9.0" layoutY="118.0" mnemonicParsing="false" onAction="#logoutCall"
-              prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: white; -fx-background-radius: 1em;"
-              text="Log out" visible="false">
+      <Button fx:id="logout" layoutX="9.0" layoutY="118.0" mnemonicParsing="false" onAction="#logoutCall" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: white; -fx-background-radius: 1em;" text="Log out" visible="false">
          <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="editProfile" layoutX="9.0" layoutY="86.0" mnemonicParsing="false" onAction="#editProfileCall"
-              prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: white; -fx-background-radius: 1em;"
-              text="Edit Profile" visible="false">
+      <Button fx:id="editProfile" layoutX="9.0" layoutY="86.0" mnemonicParsing="false" onAction="#editProfileCall" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: white; -fx-background-radius: 1em;" text="Edit Profile" visible="false">
          <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+   </Pane>
+   <Pane fx:id="updateProfile" layoutX="204.0" layoutY="18.0" prefHeight="489.0" prefWidth="498.0" visible="false">
+      <children>
+         <Label alignment="CENTER" layoutX="260.0" layoutY="19.0" prefHeight="34.0" prefWidth="170.0" text="Username" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <TextField fx:id="username" layoutX="260.0" layoutY="56.0" prefHeight="26.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <Label alignment="CENTER" layoutX="70.0" layoutY="107.0" prefWidth="170.0" text="Gender" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <ChoiceBox fx:id="genderCheckBox" layoutX="70.0" layoutY="144.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your gender">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Male" />
+                  <String fx:value="Female" />
+                  <String fx:value="Other" />
+                  <String fx:value="I prefer not to say" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
+         <Label alignment="CENTER" layoutX="70.0" layoutY="20.0" prefWidth="170.0" text="Age" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <TextField fx:id="age" layoutX="70.0" layoutY="57.0" prefWidth="170.0" style="-fx-alignment: center;" />
+         <Label alignment="CENTER" layoutX="260.0" layoutY="107.0" prefWidth="170.0" text="Objective">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <ChoiceBox fx:id="objectiveCheckBox" layoutX="260.0" layoutY="144.0" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your objective">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Weight loss" />
+                  <String fx:value="Weight gain" />
+                  <String fx:value="Weight maintenance" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
+         <Label alignment="CENTER" layoutX="164.0" layoutY="194.0" prefWidth="170.0" text="Activity level" textAlignment="CENTER">
+            <font>
+               <Font name="AdobeDevanagari-Regular" size="30.0" />
+            </font>
+         </Label>
+         <ChoiceBox fx:id="activityCheckBox" layoutX="164.0" layoutY="231.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: white; -fx-border-color: #ededed; -fx-border-width: 2; -fx-alignment: center;" stylesheets="@style.combobox.css" value="Select your activity level">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Sedentary (little or no exercise)" />
+                  <String fx:value="Lightly active (exercise 1–3 days/week)" />
+                  <String fx:value="Moderately active (exercise 3–5 days/week)" />
+                  <String fx:value="Active (exercise 6–7 days/week)" />
+                  <String fx:value="Very active (hard exercise 6–7 days/week)" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
+         <Button fx:id="updateButton" defaultButton="true" layoutX="147.0" layoutY="377.0" mnemonicParsing="false" onAction="#updateProfileCall" prefHeight="51.0" prefWidth="203.0" style="-fx-background-color: lightgreen; -fx-background-radius: 2em;" text="Update">
+            <font>
+               <Font size="24.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+         </Button>
+      </children>
+   </Pane>
+   <Pane fx:id="updateKCALGoalPane" layoutX="217.0" layoutY="27.0" prefHeight="278.0" prefWidth="471.0" style="-fx-background-color: white;" visible="false">
+      <children>
+         <Text layoutX="69.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you want to update your daily calorie&#10;goal according to the new settings made?" textAlignment="CENTER">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Text>
+         <Button fx:id="updateKCALGoalYesBTN" layoutX="79.0" layoutY="182.0" mnemonicParsing="false" onAction="#updateKCALGoalYesBTNCall" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #83dcac;" text="YES" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+         </Button>
+         <Button fx:id="updateKCALGoalNoBTN" layoutX="277.0" layoutY="182.0" mnemonicParsing="false" onAction="#updateKCALGoalNoBTNCall" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #fd6766;" text="NO" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="Berlin Sans FB" size="20.0" />
+            </font>
+         </Button>
+      </children>
    </Pane>
 </AnchorPane>
