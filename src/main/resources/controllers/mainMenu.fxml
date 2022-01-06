@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -28,9 +29,10 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #e4e4e4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenu">
    <Pane fx:id="background" layoutY="5.0" prefHeight="509.0" prefWidth="900.0">
       <children>
-         <Pane fx:id="KCALGoalPane" layoutX="204.0" layoutY="14.0" prefHeight="290.0" prefWidth="497.0" style="-fx-background-color: white; -fx-background-radius: 2em;">
+         <Pane fx:id="shadow2" layoutY="3.0" prefHeight="290.0" prefWidth="809.0" style="-fx-background-color: rgba(0,0,0,0.03); -fx-background-radius: 1em 1em 0 0;" />
+         <Pane fx:id="KCALGoalPane" layoutX="304.0" layoutY="14.0" prefHeight="278.0" prefWidth="497.0" style="-fx-background-color: white; -fx-background-radius: 1em;">
             <children>
-               <DatePicker fx:id="goalDatePicker" editable="false" layoutX="199.0" layoutY="219.0" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: white;" />
+               <DatePicker fx:id="goalDatePicker" editable="false" layoutX="190.0" layoutY="219.0" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #f5f5f5;" />
                <FlowPane fx:id="eaten" layoutX="47.0" layoutY="100.0" prefHeight="54.0" prefWidth="80.0">
                   <children>
                      <Text fill="#001b3e" strokeType="OUTSIDE" strokeWidth="0.0" text="🍲 EATEN" wrappingWidth="82.80394124984741">
@@ -46,7 +48,7 @@
                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="kcal" textAlignment="RIGHT" wrappingWidth="26.119565963745117" />
                   </children>
                </FlowPane>
-               <Label fx:id="todayLabel" alignment="CENTER" layoutX="203.0" layoutY="224.0" prefHeight="17.0" prefWidth="66.0" style="-fx-background-color: white;" text="Today" textAlignment="CENTER" />
+               <Label fx:id="todayLabel" alignment="CENTER" layoutX="200.0" layoutY="224.0" prefHeight="17.0" prefWidth="66.0" style="-fx-background-color: white;" text="Today" textAlignment="CENTER" />
                <FlowPane fx:id="burned" layoutX="369.0" layoutY="123.0" prefHeight="19.0" prefWidth="90.0">
                   <children>
                      <Text fx:id="goalKCALBurned" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="  0000" wrappingWidth="60.0">
@@ -65,11 +67,41 @@
                <Line fx:id="lineSymbol" endX="-8.199981689453125" endY="32.0" layoutX="280.0" layoutY="212.0" startX="-8.199981689453125" startY="7.0" stroke="WHITE" strokeWidth="2.0" />
             </children>
          </Pane>
+         <Pane fx:id="shadow1" layoutX="4.0" layoutY="293.0" prefHeight="178.0" prefWidth="892.0" style="-fx-background-color: rgba(0,0,0,0.03); -fx-background-radius: 0 1em 1em 1em;" />
+         <Pane fx:id="leftPane" layoutX="13.0" layoutY="14.0" prefHeight="278.0" prefWidth="277.0" style="-fx-background-color: white; -fx-background-radius: 1em;">
+            <children>
+               <LineChart fx:id="weightChart" layoutX="-12.0" layoutY="-1.0" legendSide="RIGHT" prefHeight="278.0" prefWidth="285.0" title="Weight progress(kg)">
+                 <xAxis>
+                   <CategoryAxis side="BOTTOM" />
+                 </xAxis>
+                 <yAxis>
+                   <NumberAxis side="LEFT" />
+                 </yAxis>
+               </LineChart>
+            </children>
+         </Pane>
+         <Pane fx:id="sbcPane" layoutX="13.0" layoutY="303.0" prefHeight="158.0" prefWidth="873.0" style="-fx-background-color: white; -fx-background-radius: 1em;">
+            <children>
+               <StackedBarChart fx:id="sbc" layoutX="11.0" layoutY="8.0" prefHeight="149.0" prefWidth="817.0" style="-fx-background-color: white; -fx-alternative-row-fill-visible: true;">
+                 <xAxis>
+                   <CategoryAxis side="BOTTOM" />
+                 </xAxis>
+                 <yAxis>
+                   <NumberAxis fx:id="sbcY" side="LEFT" />
+                 </yAxis>
+               </StackedBarChart>
+               <Label fx:id="weekProgress" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="3.0" prefHeight="21.0" prefWidth="760.0" text="Weekly progress" textAlignment="CENTER">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
       </children>
    </Pane>
-   <PieChart fx:id="testChart" labelsVisible="false" layoutX="320.0" layoutY="31.0" legendVisible="false" prefHeight="191.0" prefWidth="260.0" startAngle="90.0" />
-   <Circle fx:id="testCircle" fill="WHITE" layoutX="450.0" layoutY="126.0" radius="71.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
-   <FlowPane fx:id="kcalLeft" layoutX="383.0" layoutY="86.0" prefHeight="91.0" prefWidth="134.0">
+   <PieChart fx:id="testChart" labelsVisible="false" layoutX="420.0" layoutY="31.0" legendVisible="false" prefHeight="191.0" prefWidth="260.0" startAngle="90.0" />
+   <Circle fx:id="testCircle" fill="WHITE" layoutX="550.0" layoutY="126.0" radius="71.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+   <FlowPane fx:id="kcalLeft" layoutX="483.0" layoutY="86.0" prefHeight="91.0" prefWidth="134.0">
       <children>
          <Text fx:id="goalKCALGoal" strokeType="OUTSIDE" strokeWidth="0.0" text="0000" textAlignment="CENTER" wrappingWidth="132.4000244140625">
             <font>
@@ -83,7 +115,7 @@
          </Text>
       </children>
    </FlowPane>
-   <Button fx:id="changeKCALGoalBTN" layoutX="391.0" layoutY="99.0" mnemonicParsing="false" onAction="#changeKCALGoal" prefHeight="72.0" prefWidth="114.0" style="-fx-background-color: none;">
+   <Button fx:id="changeKCALGoalBTN" layoutX="491.0" layoutY="99.0" mnemonicParsing="false" onAction="#changeKCALGoal" prefHeight="72.0" prefWidth="114.0" style="-fx-background-color: none;">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
@@ -104,15 +136,9 @@
          <Label fx:id="dailyJCAKGoalErrorLabel" alignment="CENTER" layoutX="33.0" layoutY="9.0" prefHeight="22.0" prefWidth="190.0" style="-fx-background-color: white;" text="Please type your new daily goal" textAlignment="CENTER" textFill="RED" visible="false" />
       </children>
    </Pane>
-   <LineChart fx:id="weeklyChart" layoutX="165.0" layoutY="232.0" prefHeight="234.0" prefWidth="552.0" title="Weekly progress" visible="false">
-     <xAxis>
-       <CategoryAxis side="BOTTOM" />
-     </xAxis>
-     <yAxis>
-       <NumberAxis side="LEFT" />
-     </yAxis>
-   </LineChart>
    <Pane fx:id="plusSection" layoutX="251.0" layoutY="600.0" prefHeight="270.0" prefWidth="400.0" style="-fx-background-color: white; -fx-background-radius: 2em 2em 0 0;">
+      <Pane layoutX="-10.0" layoutY="-10.0" opacity="0.15" prefHeight="290.0" prefWidth="420.0" style="-fx-background-color: gray; -fx-background-radius: 2em 2em 0 0;" />
+      <Pane prefHeight="271.0" prefWidth="400.0" style="-fx-background-color: white; -fx-background-radius: 2em 2em 0 0;" />
       <TextField fx:id="weightFieldAddKG" alignment="TOP_CENTER" layoutX="63.0" layoutY="51.0" prefHeight="25.0" prefWidth="51.0" style="-fx-background-radius: 1em; -fx-alignment: center;">
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -377,7 +403,6 @@
             <Button layoutX="243.0" layoutY="90.0" mnemonicParsing="false" onAction="#serving_plus" style="-fx-border-radius: 2em; -fx-background-color: lightgray;" text="+" />
          </children>
       </Pane>
-      <FlowPane fx:id="cameraPane" layoutY="-141.0" prefHeight="300.0" prefWidth="400.0" visible="false" />
    </Pane>
    <Pane fx:id="underBottomSection" layoutX="204.0" layoutY="588.0" prefHeight="12.0" prefWidth="527.0" style="-fx-background-color: #e4e4e4;" />
    <Pane fx:id="bottomSection" layoutX="10.0" layoutY="508.0" prefHeight="80.0" prefWidth="880.0" style="-fx-background-color: white; -fx-background-radius: 1em; -fx-border-radius: 1em;">
@@ -411,7 +436,7 @@
          </Button>
       </Pane>
    </Pane>
-   <Pane fx:id="profilePane" layoutX="801.0" layoutY="-1.0" prefHeight="181.0" prefWidth="100.0">
+   <Pane fx:id="profilePane" layoutX="801.0" layoutY="29.0" prefHeight="181.0" prefWidth="100.0">
       <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="10.0" layoutY="8.0">
          <Image url="@img/output-onlinepngtools.png" />
       </ImageView>

@@ -1,54 +1,34 @@
 package controllers;
 
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.HybridBinarizer;
-import application.methods.*;
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
 import application.UserSession;
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
+import application.methods.Animations;
+import application.methods.Camera;
+import application.methods.DatabaseConnection;
+import hashmap.*;
 import javafx.animation.TranslateTransition;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -56,10 +36,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static application.methods.OnlineReadJSON.scan_barcode;
 
@@ -102,6 +84,8 @@ public class MainMenu implements Initializable {
     @FXML
     private DatePicker goalDatePicker;
     public static TextField static_barcodeField;
+    @FXML private LineChart linechart;
+    @FXML private StackedBarChart<String, Number> sbc;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         static_barcodeField = barcodeField;
@@ -197,9 +181,129 @@ public class MainMenu implements Initializable {
 
         serving.setOnAction(this::servingChange);
         goalDatePicker.setValue(LocalDate.now());
-        changeGoalDetails();
-        goalDatePicker.valueProperty().addListener((observable, oldDate, newDate)-> changeGoalDetails());
+        barchartInit();
+        changeGoalDetails("");
+        goalDatePicker.valueProperty().addListener((observable, oldDate, newDate)-> changeGoalDetails(String.valueOf(oldDate)));
         datePickerAdd.valueProperty().addListener((observable, oldDate, newDate)-> changeDatePickerAddLabel());
+    }
+    @FXML LineChart weightChart;
+    private void barchartInit() {
+        sbc.getData().clear();
+        weightChart.getData().clear();
+        weightChart.setAnimated(true);
+        sbc.setAnimated(true);// enable animation
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        XYChart.Series<String, Number> kgseries = new XYChart.Series<>();
+        series.setName("Week kcal progress");
+        Calendar c = Calendar.getInstance();
+        c.setTime(java.sql.Date.valueOf(goalDatePicker.getValue()));
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        LocalDate datePicked = goalDatePicker.getValue();
+//        System.out.println("date picked: "+(datePicked));
+//        System.out.println("monday: date modified by -"+(dayOfWeek-1)+" days: "+(datePicked.minusDays(dayOfWeek-1)));
+
+        HashMapp map = new HashMapp();
+        // weekly kcal consumtion
+        map.put(new Key(1), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-1)))));
+        map.put(new Key(2), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-2)))));
+        map.put(new Key(3), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-3)))));
+        map.put(new Key(4), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-4)))));
+        map.put(new Key(5), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-5)))));
+        map.put(new Key(6), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-6)))));
+        map.put(new Key(7), new Value(getKcalConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-7)))));
+        // weekly weight change
+        map.put(new Key(8), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-1)))));
+        map.put(new Key(9), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-2)))));
+        map.put(new Key(10), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-3)))));
+        map.put(new Key(11), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-4)))));
+        map.put(new Key(12), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-5)))));
+        map.put(new Key(13), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-6)))));
+        map.put(new Key(14), new Value(getWeightConsumedByDate(String.valueOf(datePicked.minusDays(dayOfWeek-7)))));
+
+        series.getData().add(new XYChart.Data<>("Sunday", map.get(new Key(1)).getValue()));
+        series.getData().add(new XYChart.Data<>("Monday", map.get(new Key(2)).getValue()));
+        series.getData().add(new XYChart.Data<>("Tuesday", map.get(new Key(3)).getValue()));
+        series.getData().add(new XYChart.Data<>("Wednesday", map.get(new Key(4)).getValue()));
+        series.getData().add(new XYChart.Data<>("Thursday", map.get(new Key(5)).getValue()));
+        series.getData().add(new XYChart.Data<>("Friday", map.get(new Key(6)).getValue()));
+        series.getData().add(new XYChart.Data<>("Saturday", map.get(new Key(7)).getValue()));
+
+        if (map.get(new Key(8)).getValue() > 0)
+        kgseries.getData().add(new XYChart.Data<>("Sunday", map.get(new Key(8)).getValue()));
+        if (map.get(new Key(9)).getValue() > 0 )
+        kgseries.getData().add(new XYChart.Data<>("Monday", map.get(new Key(9)).getValue()));
+        if (map.get(new Key(10)).getValue() > 0)
+        kgseries.getData().add(new XYChart.Data<>("Tuesday", map.get(new Key(10)).getValue()));
+        if (map.get(new Key(11)).getValue() > 0)
+        kgseries.getData().add(new XYChart.Data<>("Wednesday", map.get(new Key(11)).getValue()));
+        if (map.get(new Key(12)).getValue() > 0)
+        kgseries.getData().add(new XYChart.Data<>("Thursday", map.get(new Key(12)).getValue()));
+        if (map.get(new Key(13)).getValue() > 0)
+        kgseries.getData().add(new XYChart.Data<>("Friday", map.get(new Key(13)).getValue()));
+        if (map.get(new Key(14)).getValue() > 0)
+        kgseries.getData().add(new XYChart.Data<>("Saturday", map.get(new Key(14)).getValue()));
+
+        weightChart.getData().add(kgseries);
+        sbc.getData().add(series);
+        weightChart.setAnimated(false);
+        sbc.setAnimated(false);// enable animation
+        sbcY.setAutoRanging(true);
+        weekProgress.setText("KCAL progress in week "+goalDatePicker.getValue().get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear())+" of "+goalDatePicker.getValue().getYear());
+    }
+    @FXML private Label weekProgress;
+    @FXML private NumberAxis sbcY;
+    /*
+        String date (YYYY-MM-DD)
+    */
+    private int getKcalConsumedByDate(String date) {
+        int kcal_eaten = 0;
+        try {
+            Connection connectDB;
+            DatabaseConnection connectNow = new DatabaseConnection();
+            connectDB = connectNow.getConnection();
+            Statement statement = connectDB.createStatement();
+
+            String verifyLogin = "SELECT json_extract(history, '$." + date + "') AS 'date' " +
+                    "FROM users " +
+                    "WHERE email = '" + UserSession.getEmail() + "';";
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+            queryResult.next();
+            String getDate = queryResult.getString(1);
+
+            if (getDate != null) {
+                JSONObject getDateJSON = new JSONObject(getDate.substring(1, getDate.length() - 1));
+                kcal_eaten = (int) getDateJSON.getFloat("kcal_consumed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return kcal_eaten;
+    }
+    private int getWeightConsumedByDate(String date) {
+        int weight = 0;
+        try {
+            Connection connectDB;
+            DatabaseConnection connectNow = new DatabaseConnection();
+            connectDB = connectNow.getConnection();
+            Statement statement = connectDB.createStatement();
+
+            String verifyLogin = "SELECT json_extract(history, '$." + date + "') AS 'date' " +
+                    "FROM users " +
+                    "WHERE email = '" + UserSession.getEmail() + "';";
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+            queryResult.next();
+            String getDate = queryResult.getString(1);
+
+            if (getDate != null) {
+                JSONObject getDateJSON = new JSONObject(getDate.substring(1, getDate.length() - 1));
+                weight = (int) getDateJSON.getFloat("weight");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return weight;
     }
     @FXML private Label todayLabelAdd;
     private void changeDatePickerAddLabel() {
@@ -219,9 +323,9 @@ public class MainMenu implements Initializable {
     @FXML private PieChart testChart;
     // goalDatePicker event listener for this \/
     /**
-     *  Aceasta metoda updateaza datele din interfata grafica laund datele din database
+     *  Aceasta metoda updateaza datele din interfata grafica laund datele din baza de date
      */
-    private void changeGoalDetails() {
+    private void changeGoalDetails(String oldDate) {
         todayLabel.setVisible(goalDatePicker.getValue().equals(LocalDate.now()));
         try {
             Connection connectDB;
@@ -237,20 +341,19 @@ public class MainMenu implements Initializable {
             String getDate = queryResult.getString(1);
 
             int kcal_eaten = 0;
-            if (getDate != null){
+            if (getDate != null) {
                 JSONObject getDateJSON = new JSONObject(getDate.substring(1, getDate.length() - 1));
                 kcal_eaten = (int) getDateJSON.getFloat("kcal_consumed");
                 goalKCALEaten.setText(String.valueOf(kcal_eaten));
-            }
-            else
+            } else
                 goalKCALEaten.setText("0");
 
             PieChart.Data pcd1 = new PieChart.Data("eaten", kcal_eaten);
-            PieChart.Data pcd2 = new PieChart.Data("remaining", UserSession.getDailyKcal()-kcal_eaten);
+            PieChart.Data pcd2 = new PieChart.Data("remaining", UserSession.getDailyKcal() - kcal_eaten);
 
             goalKCALBurned.setText("0");
 
-            int remaining = UserSession.getDailyKcal()-kcal_eaten;
+            int remaining = UserSession.getDailyKcal() - kcal_eaten;
             if (remaining > 0) {
                 goalKCALGoal.setText(String.valueOf(remaining));
                 kcalLeftText.setText("kcal left");
@@ -259,16 +362,14 @@ public class MainMenu implements Initializable {
                 testChart.getData().addAll(pcd1, pcd2);
                 pcd1.getNode().setStyle("-fx-pie-color: lightblue;");
                 pcd2.getNode().setStyle("-fx-pie-color: rgba(0,0,0,0.90);");
-            }
-            else if (remaining < 0) {
-                goalKCALGoal.setText("+"+(remaining * (-1)));
+            } else if (remaining < 0) {
+                goalKCALGoal.setText("+" + (remaining * (-1)));
                 kcalLeftText.setText("kcal over your\ngoal");
                 kcalLeftText.setStyle("-fx-text-fill: #a43838; -fx-font-size: 17px;");
                 testChart.getData().clear();
                 testChart.getData().addAll(pcd1);
                 pcd1.getNode().setStyle("-fx-pie-color: #b43838;");
-            }
-            else {
+            } else {
                 goalKCALGoal.setText(String.valueOf(remaining * (-1)));
                 kcalLeftText.setText("Completed");
                 kcalLeftText.setStyle("-fx-text-fill: #30ab30;");
@@ -276,11 +377,24 @@ public class MainMenu implements Initializable {
                 testChart.getData().addAll(pcd1);
                 pcd1.getNode().setStyle("-fx-pie-color: #3ec03e;");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = goalDatePicker.getValue();
+        Calendar c = Calendar.getInstance();
+        if (oldDate != ""){
+            date = LocalDate.parse(oldDate, formatter);
+            c.setTime(java.sql.Date.valueOf(date));
+        }
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+        if (oldDate.equals("") || goalDatePicker.getValue().getDayOfMonth() < date.minusDays(dayOfWeek-1).getDayOfMonth()
+        || goalDatePicker.getValue().getDayOfMonth() > date.minusDays(dayOfWeek-7).getDayOfMonth() )
+            // means day is already in the showed week
+        barchartInit();
     }
     @FXML Text kcalLeftText;
     private void servingChange(Event event) {
@@ -431,7 +545,7 @@ public class MainMenu implements Initializable {
             cancelAddMealBtn();
             barcodeField.setText("");
             getTranslate362();
-            changeGoalDetails();
+            changeGoalDetails("");
 
         }
     }
@@ -440,6 +554,7 @@ public class MainMenu implements Initializable {
     public void changeKCALGoal() {
         newKcalGoalPane.setVisible(!newKcalGoalPane.isVisible());
     }
+    @FXML private StackedBarChart barchart;
     @FXML private Label dailyJCAKGoalErrorLabel;
     public void updateKCALGoal() {
         String newValue = (newKcalValue.getText());
@@ -588,7 +703,7 @@ public class MainMenu implements Initializable {
                 String query = "update users set dailyKcal = "+newValue+" where email='"+UserSession.getEmail()+"';";
                 statement.executeUpdate(query);
                 changeKCALGoal();
-                changeGoalDetails();
+                changeGoalDetails("");
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause();
@@ -601,9 +716,17 @@ public class MainMenu implements Initializable {
         updateKCALGoalPane.setVisible(false);
         editProfileCall();
     }
-    @FXML Pane updateKCALGoalPane;
+    @FXML Pane updateKCALGoalPane,sbcPane,leftPane,shadow2,shadow1;
     @FXML Button updateButton;
     public void editProfileCall() {
+        leftPane.setVisible(!leftPane.isVisible());
+        if (leftPane.isVisible())
+            KCALGoalPane.setLayoutX(304);
+        else
+            KCALGoalPane.setLayoutX(204);
+        shadow2.setVisible(!shadow2.isVisible());
+        shadow1.setVisible(!shadow1.isVisible());
+        sbcPane.setVisible(!sbcPane.isVisible());
         updateButton.setText("Update");
         updateProfile.setVisible(!updateProfile.isVisible());
         logout.setVisible(false);
